@@ -1,28 +1,28 @@
-﻿var def = [
-    {"id": "i0","type": "user-img","dataset": [["hash", "IMG"]],"init": "icon_l.png"}, 
-    {"id": "i1","type": "user-text","dataset": [["hash", "TEXT"]],"init": "Hello, griddles!"}, 
-    {"id": "i2","type": "user-free","dataset": [["hash", "FREE"]],"init": "画面の大きさに合わせて<br>カードがセンタリングされます！"}
-];
-var demo = {
-    menu: ["ようこそ！", "ふせん", "アイコン"],
+﻿var demo = {
+    menu: ["アイコン", "正方形", "ふせん"],
     load: function() {
         var e = 0;
         var opt = "";
-        griddles.layout.cards = def;
+        //griddles.layout.cards = def;
         for (e = 0; e < demo.menu.length; e++) {
             opt = opt + '<option value="' + demo.menu[e] + '">' + demo.menu[e] + '</option>';
         }
         d.getElementById("select_menu").innerHTML = opt;
         d.getElementById("select_menu").addEventListener("change", demo.change, false);
+        demo.change({"target": {"value": "アイコン"}});
     },
     change: function(e) {
         console.log(e.target.value);
         griddles.render = true;
         switch (e.target.value) {
-            case "ようこそ！":
+            case "正方形":
                 griddles.layout.card_height_px = 250;
                 griddles.layout.card_width_px = 250;
-                griddles.layout.cards = def;
+                griddles.layout.cards = [
+                    {"id": "i0","type": "user-img","dataset": [["hash", "IMG"]],"init": "icon_l.png"}, 
+                    {"id": "i1","type": "user-text","dataset": [["hash", "TEXT"]],"init": "Hello, griddles!"}, 
+                    {"id": "i2","type": "user-free","dataset": [["hash", "FREE"]],"init": "画面の大きさに合わせて<br>カードがセンタリングされます！"}
+                ];
                 griddles.load();
                 break;
             case "ふせん":
@@ -56,7 +56,7 @@ var demo = {
                     {"id": "e6","type": "user-free", "dataset": [], "init": "<div class='i'>.</div>"},
                     {"id": "e7","type": "user-free", "dataset": [], "init": "<div class='i'>0</div>"},
                     {"id": "e8","type": "user-free", "dataset": [], "init": "<div class='i'>.</div>"},
-                    {"id": "e9","type": "user-free", "dataset": [], "init": "<div class='i'>1</div>"}
+                    {"id": "e9","type": "user-free", "dataset": [], "init": "<div class='i ye'>1</div>"}
                 ];
                 griddles.load();
                 break;
