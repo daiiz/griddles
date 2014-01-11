@@ -40,20 +40,23 @@ var demo = {
                 griddles.load();
                 break;
             case "アイコン":
-                griddles.layout.card_height_px = 52;
-                griddles.layout.card_width_px = 52;
+                griddles.layout.card_height_px = 65;
+                griddles.layout.card_width_px = 65;
                 griddles.layout.cards = [
-                    {"id": "i0","type": "user-free", "dataset": [], "init": "<div class='i ye'>あ</div>"},
-                    {"id": "i1","type": "user-free", "dataset": [], "init": "<div class='i ye'>い</div>"},
-                    {"id": "i2","type": "user-free", "dataset": [], "init": "<div class='i ye'>う</div>"},
-                    {"id": "i3","type": "user-free", "dataset": [], "init": "<div class='i ye'>え</div>"},
-                    {"id": "i4","type": "user-free", "dataset": [], "init": "<div class='i ye'>お</div>"},
-                    {"id": "e1","type": "user-free", "dataset": [], "init": "<div class='i'>A</div>"},
-                    {"id": "e2","type": "user-free", "dataset": [], "init": "<div class='i'>I</div>"},
-                    {"id": "e3","type": "user-free", "dataset": [], "init": "<div class='i'>U</div>"},
-                    {"id": "e4","type": "user-free", "dataset": [], "init": "<div class='i'>E</div>"},
-                    {"id": "e5","type": "user-free", "dataset": [], "init": "<div class='i'>O</div>"}
-                    
+                    {"id": "i0","type": "user-free", "dataset": [], "init": "<div class='i ye'>G</div>"},
+                    {"id": "i1","type": "user-free", "dataset": [], "init": "<div class='i ye'>r</div>"},
+                    {"id": "i2","type": "user-free", "dataset": [], "init": "<div class='i ye'>i</div>"},
+                    {"id": "i3","type": "user-free", "dataset": [], "init": "<div class='i ye'>d</div>"},
+                    {"id": "i4","type": "user-free", "dataset": [], "init": "<div class='i ye'>d</div>"},
+                    {"id": "e1","type": "user-free", "dataset": [], "init": "<div class='i ye'>l</div>"},
+                    {"id": "e2","type": "user-free", "dataset": [], "init": "<div class='i ye'>e</div>"},
+                    {"id": "e3","type": "user-free", "dataset": [], "init": "<div class='i ye'>s</div>"},
+                    {"id": "e4","type": "user-free", "dataset": [], "init": "<div class='i'>v</div>"},
+                    {"id": "e5","type": "user-free", "dataset": [], "init": "<div class='i'>0</div>"},
+                    {"id": "e6","type": "user-free", "dataset": [], "init": "<div class='i'>.</div>"},
+                    {"id": "e7","type": "user-free", "dataset": [], "init": "<div class='i'>0</div>"},
+                    {"id": "e8","type": "user-free", "dataset": [], "init": "<div class='i'>.</div>"},
+                    {"id": "e9","type": "user-free", "dataset": [], "init": "<div class='i'>1</div>"}
                 ];
                 griddles.load();
                 break;

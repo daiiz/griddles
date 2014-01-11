@@ -28,7 +28,7 @@ griddles.layout.cardOnClick = function(j) {
 
 /* Renderer */
 var d = document;
-var scrollbar_width = 14;
+var scrollbar_width = 15;
 
 griddles.stream_num = 0;
 griddles.pre_width = 0;
@@ -49,18 +49,16 @@ griddles.load = function() {
         var sw = griddles.layout.card_width_px;
         var sl = griddles.layout.stream_margin_left_px;
         var sr = griddles.layout.stream_margin_right_px
-        var max_stream_nums = Math.floor(w85pc / (sl + sw));
+        var max_stream_nums = Math.floor((w85pc) / (sl + sw + sr));
         
-        var left = w85pc - (max_stream_nums * (sl + sw));
-        var margin_left = left / 2;
-        //console.log(margin_left);
+        var left = (w85pc) - (max_stream_nums * (sl + sw + sr));
+        var margin_left = Math.floor(left / 2);
         console.log("stream: " + max_stream_nums);
 
         //if(ww > (sl + sw) + left) {
         if (max_stream_nums > 0) {
             document.getElementById("main").style.width = aw * 100 + "%";
-            document.getElementById("stage").style.marginLeft = (margin_left - sl) + "px";
-            //console.log("!" + margin_left);
+            document.getElementById("stage").style.marginLeft = (margin_left) + "px";  /* -sl*/
             griddles.renderStream(max_stream_nums, sw, [griddles.layout.stream_margin_left_px, griddles.layout.stream_margin_right_px]);
         } else {
             var lr = (ww - scrollbar_width) - sw;

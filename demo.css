@@ -46,13 +46,16 @@
 }
 
 .i {
-    font-family: Meiryo;
+    font-family: 'osl',Meiryo;
     font-weight: normal;
-    font-size: 35px;
+    font-size: 45px;
+    font-size: -webkit-xxx-large;
     text-align: center;
     cursor: pointer;
 }
 
 .ye {
     background-color: #FFB902;
+    height: 63px;
+    border-radius: 2px;
 }
