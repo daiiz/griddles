@@ -103,4 +103,6 @@ body {
     float: right;
     margin-right: 35px;
     margin-top: -38px;
+    position: relative;
+    z-index: 99;
 }
