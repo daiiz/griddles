@@ -59,15 +59,16 @@ griddles.load = function() {
         if (max_stream_nums > 0) {
             document.getElementById("main").style.width = aw * 100 + "%";
             document.getElementById("stage").style.marginLeft = (margin_left) + "px";  /* -sl*/
-            griddles.renderStream(max_stream_nums, sw, [griddles.layout.stream_margin_left_px, griddles.layout.stream_margin_right_px]);
+            griddles.renderStream(max_stream_nums, sw, [griddles.layout.stream_margin_left_px + "px", griddles.layout.stream_margin_right_px+ "px"]);
         } else {
-            var lr = (ww - scrollbar_width) - sw;
+            var lr = w85pc - sw; //(ww - scrollbar_width) -sw
             if (lr > 0) {
                 lf = lr / 2;
             } else {
                 lf = 0;
             }
-            griddles.renderStream(1, sw, [lf, lf]);
+            document.getElementById("stage").style.marginLeft = 0 + "px";
+            griddles.renderStream(1, sw, [lf + "px", lf + "px"]);
         }
     }
 }
@@ -76,7 +77,7 @@ griddles.renderStream = function(n, w, a) {
     w = w + "px";
     var dom = "";
     for (y = 0; y < n; y++) {
-        dom = dom + '<div id="stream_' + y + '" class="Stream" style="width:' + w + ';margin-left:' + a[0] + 'px;margin-right:' + a[1] + 'px;"></div>';
+        dom = dom + '<div id="stream_' + y + '" class="Stream" style="width:' + w + ';margin-left:' + a[0] + ';margin-right:' + a[1] + ';"></div>';
     }
     d.getElementById("stage").innerHTML = dom;
     griddles.stream_num = n;
@@ -143,13 +144,13 @@ griddles.renderCards = function(n) {
                     dsr = "";
                     break;
                 case "user-text":
-                    v = 'padding: 15px; font-size:11pt; font-family: osl,Meiryo;';
+                    v = "padding: 15px; font-size:11pt; font-family: 'Open Sans',Meiryo;";
                     vv = 'style="width:100%; height: 100%;"';
                     id = 'id="' + id + '"';
                     card_id = 'id="card_' + x + '"';
                     break;
                 case "user-free":
-                    v = "font-family: osl,Meiryo;";
+                    v = "font-family: 'Open Sans' ,Meiryo;";
                     vv = 'style="width:100%; height: 100%;"';
                     id = 'id="' + id + '"';
                     card_id = 'id="card_' + x + '"';

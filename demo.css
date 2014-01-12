@@ -41,12 +41,12 @@
 }
 
 .y {
-    font-family: osl;
+    font-family: "Open Sans";
     font-size: 25pt;
 }
 
 .i {
-    font-family: 'osl',Meiryo;
+    font-family: 'Open Sans',Meiryo;
     font-weight: normal;
     font-size: 48px; /*-webkit-xxx-large;*/
     text-align: center;
