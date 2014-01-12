@@ -48,8 +48,7 @@
 .i {
     font-family: 'osl',Meiryo;
     font-weight: normal;
-    font-size: 45px;
-    font-size: -webkit-xxx-large;
+    font-size: 48px; /*-webkit-xxx-large;*/
     text-align: center;
     cursor: pointer;
 }
