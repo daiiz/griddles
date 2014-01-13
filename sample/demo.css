@@ -1,4 +1,9 @@
 ﻿/* デモ用 */
+@font-face {
+    font-family: 'Open Sans';
+    src: url('font/OpenSans-Light.ttf') format('truetype');
+}
+
 .my-husen-blue {
     border-width: 0px 0px 0px 25px;
     border-radius: 2px 0px 0px 2px;

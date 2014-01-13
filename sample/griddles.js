@@ -8,8 +8,8 @@
  
  /* User settings */
 griddles.layout = {
-    "page_title": "griddles",
-    "app_name": "Griddles",
+    "page_title": "sample",
+    "app_name": "Sample",
     "app_icon": "icon.png",
     "card_width_px": 250,
     "card_height_px": 250, /* "auto" */
