@@ -96,19 +96,9 @@ griddles.renderTime = function(y, lg, cards, n) {
           d.getElementById("stream_" + g).innerHTML = "";
         }
      }
-     //var content = 
+
      griddles.lg = lg;
      griddles.createContent(cards, y, n);
-     //$(d.getElementById("stream_" + intMinStream)).append(content);
-     /*
-     griddles.mainTimer = window.setTimeout(function() {
-        if(y+1 < lg) {
-           griddles.renderTime(y+1, lg, cards, n);
-        }else {
-           d.getElementsByTagName("title")[0].innerHTML = griddles.layout.page_title;
-        }
-     }, 100);
-     */
 }
 
 griddles.setStreamHeights = function(n) {
@@ -133,6 +123,19 @@ griddles.getMinStream = function(a) {
     return min_index;
 }
 
+griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n) {
+   content = '<div class="Card" ' + card_id + 'style="display:block; ' + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + hg +  tit + '">' + 
+                       '<div class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
+                       '</div>';
+   $(d.getElementById("stream_" + intMinStream)).append(content);
+   lg = griddles.lg;
+       if(y+1 < lg) {
+           /* 再帰 */
+           griddles.createContent(cards, y+1, n);
+       }else {
+           d.getElementsByTagName("title")[0].innerHTML = griddles.layout.page_title;
+       }
+}
 
 griddles.createContent = function(cards, y, n) {
              streamHeights = griddles.setStreamHeights(n);
@@ -183,48 +186,36 @@ griddles.createContent = function(cards, y, n) {
                     var img = document.getElementById("IMAGE");
                     img.src = imgSrc;
                     img.width = ww;
-                    //img.height = 
                     img.onload = function(e) { 
                        console.log('読み込み完了: ' + imgSrc); 
                        console.log(document.getElementById("IMAGE").height);
                        if(hg == "") {                       
                            hg = "height: " + (document.getElementById("IMAGE").offsetHeight + 6) + "px;";
                        }
-                       content = '<div class="Card" ' + card_id + 'style="display:block; ' + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + hg +  tit + '">' + 
-                       '<div class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
-                       '</div>';
-                       $(d.getElementById("stream_" + intMinStream)).append(content);
-                       lg = griddles.lg;
-                       if(y+1 < lg) {
-                            /* 再帰 */
-                            griddles.createContent(cards, y+1, n);
-                       }else {
-                            d.getElementsByTagName("title")[0].innerHTML = griddles.layout.page_title;
-                       }
-                    } 
+                       griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
+                     } 
                     break;
                 case "user-text":
                     v = "padding: 15px; font-size:11pt; font-family: 'Open Sans',Meiryo;";
                     vv = 'style="width:100%; height: 100%;"';
                     id = 'id="' + id + '"';
                     card_id = 'id="card_' + y + '"';
+                    griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
                     break;
                 case "user-free":
                     v = "font-family: 'Open Sans' ,Meiryo;";
                     vv = 'style="width:100%; height: 100%;"';
                     id = 'id="' + id + '"';
                     card_id = 'id="card_' + y + '"';
+                    griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
                     break;
                 default:
                     vv = 'style="width:100%; height: 100%;"';
                     id = 'id="' + id + '"';
                     card_id = 'id="card_' + y + '"';
+                    griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
                     break;
              }
-             /*content = '<div class="Card" ' + card_id + 'style="display:block; ' + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + h +  tit + '">' + 
-                       '<div class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
-                       '</div>';*/
-             //return content;
 }
 
 griddles.clicked = function(e) {
