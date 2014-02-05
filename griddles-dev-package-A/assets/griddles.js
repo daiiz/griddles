@@ -106,7 +106,7 @@ griddles.setStreamHeights = function(n) {
     for (var x = 0; x < n; x++) {
         res.push(document.getElementById("stream_"+x).offsetHeight);
     }
-    console.log(res);
+    //console.log(res);
     return res;
 }
 
@@ -119,7 +119,7 @@ griddles.getMinStream = function(a) {
           min_value = a[e];
        }
     }
-    console.log(min_index);
+    //console.log(min_index);
     return min_index;
 }
 
@@ -193,7 +193,12 @@ griddles.createContent = function(cards, y, n) {
                            hg = "height: " + (document.getElementById("IMAGE").offsetHeight + 6) + "px;";
                        }
                        griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
-                     } 
+                     }
+                     img.onerror = function() { 
+                        console.error('読み込めない画像がありました： '+ imgSrc); 
+                        init = "";
+                        griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
+                      } 
                     break;
                 case "user-text":
                     v = "padding: 15px; font-size:11pt; font-family: 'Open Sans',Meiryo;";
