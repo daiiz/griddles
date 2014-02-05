@@ -1,5 +1,5 @@
 ﻿/**
- * Griddles v0.0.2
+ * Griddles v0.0.3
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -23,7 +23,7 @@ griddles.load = function() {
     if (ww != griddles.pre_width || griddles.render == true) {
         console.log("resized!");
         
-        window.clearTimeout(griddles.mainTimer);
+        //window.clearTimeout(griddles.mainTimer);
         var n = document.getElementsByClassName("Stream").length;
         for(g = 0; g < n; g++) {
           d.getElementById("stream_" + g).innerHTML = "";
@@ -96,9 +96,11 @@ griddles.renderTime = function(y, lg, cards, n) {
           d.getElementById("stream_" + g).innerHTML = "";
         }
      }
-     var content = griddles.createContent(cards, y);
-     $(d.getElementById("stream_" + intMinStream)).append(content);
-     
+     //var content = 
+     griddles.lg = lg;
+     griddles.createContent(cards, y, n);
+     //$(d.getElementById("stream_" + intMinStream)).append(content);
+     /*
      griddles.mainTimer = window.setTimeout(function() {
         if(y+1 < lg) {
            griddles.renderTime(y+1, lg, cards, n);
@@ -106,6 +108,7 @@ griddles.renderTime = function(y, lg, cards, n) {
            d.getElementsByTagName("title")[0].innerHTML = griddles.layout.page_title;
         }
      }, 100);
+     */
 }
 
 griddles.setStreamHeights = function(n) {
@@ -131,7 +134,14 @@ griddles.getMinStream = function(a) {
 }
 
 
-griddles.createContent = function(cards, y) {
+griddles.createContent = function(cards, y, n) {
+             streamHeights = griddles.setStreamHeights(n);
+             intMinStream = griddles.getMinStream(streamHeights);
+              if(y == 0) {
+                 for(g = 0; g < n; g++) {
+                    d.getElementById("stream_" + g).innerHTML = "";
+                 }
+              }
              var content = "";
              var w = griddles.layout.card_width_px;
              var h = "height:" + griddles.layout.card_height_px + "px";
@@ -153,19 +163,45 @@ griddles.createContent = function(cards, y) {
              
              if (griddles.layout.card_height_px != "auto") {
                 var hh = "height: " + (griddles.layout.card_height_px - 6) + "px!important;";
+                var hg = "height: " + (griddles.layout.card_height_px) + "px!important;";;
              } else {
                 var h = "";
                 var hh = "";
+                var hg = "";
              }
              var v = "";
              var vv = "";
              var ww = griddles.layout.card_width_px - 6;
              switch (type) {
                 case "user-img":
-                    init = "<img src='" + init + "' style='width:" + ww + "px!important;"+hh+"' class='img' id='" + id + "' " + dsr + ">"; 
+                    var imgSrc = init;
+                    init = "<img src='" + init + "' style='display:block;width:" + ww + "px!important;"+hh+"' class='img' id='" + id + "' " + dsr + ">"; 
                     id = "";
                     card_id = 'id="card_' + y + '"';
                     dsr = "";
+                    /* 追記 */
+                    var img = document.getElementById("IMAGE");
+                    img.src = imgSrc;
+                    img.width = ww;
+                    //img.height = 
+                    img.onload = function(e) { 
+                       console.log('読み込み完了: ' + imgSrc); 
+                       console.log(document.getElementById("IMAGE").height);
+                       if(hg == "") {                       
+                           hg = "height: " + (document.getElementById("IMAGE").offsetHeight + 6) + "px;";
+                       }
+                       content = '<div class="Card" ' + card_id + 'style="display:block; ' + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + hg +  tit + '">' + 
+                       '<div class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
+                       '</div>';
+                       $(d.getElementById("stream_" + intMinStream)).append(content);
+                       lg = griddles.lg;
+                       if(y+1 < lg) {
+                            /* 再帰 */
+                            griddles.createContent(cards, y+1, n);
+                       }else {
+                            d.getElementsByTagName("title")[0].innerHTML = griddles.layout.page_title;
+                       }
+                    } 
                     break;
                 case "user-text":
                     v = "padding: 15px; font-size:11pt; font-family: 'Open Sans',Meiryo;";
@@ -185,10 +221,10 @@ griddles.createContent = function(cards, y) {
                     card_id = 'id="card_' + y + '"';
                     break;
              }
-             content = '<div class="Card" ' + card_id + 'style="display:block; ' + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + h +  tit + '">' + 
+             /*content = '<div class="Card" ' + card_id + 'style="display:block; ' + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + h +  tit + '">' + 
                        '<div class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
-                       '</div>';
-             return content;
+                       '</div>';*/
+             //return content;
 }
 
 griddles.clicked = function(e) {
