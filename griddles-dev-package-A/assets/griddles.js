@@ -237,7 +237,7 @@ griddles.createContent = function(cards, y, n) {
             img.onerror = function() {
                 console.error('読み込めない画像がありました： ' + imgSrc);
                 init = "";
-                griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
+                griddles.appearContent(card_id, v, b, w, hg, tit, type+":err", vv, id, dsr, init, intMinStream, cards, y, n);
             }
             break;
         case "user-text":
