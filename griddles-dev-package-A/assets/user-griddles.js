@@ -1,5 +1,5 @@
 ﻿/**
- * Griddles v0.0.2
+ * Griddles v0.0.7
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
