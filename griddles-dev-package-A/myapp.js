@@ -1,27 +1,28 @@
-﻿var myApp = myApp || {};
+﻿// This is a sample.
+
+var myApp = myApp || {};
 
 myApp.load = function(e) {
    myApp.settingSelectBox(["fixed", "auto"]);
-   for(var u = 0; u < 13; u++) {
-      var arr = arr || [];
-      arr.push({"id": "a"+u, "type": "user-img", "dataset": [["url", "hey"]], "init": "sample-images/"+(u+1)+".png"});
-   }
-   for(var u = 0; u < 13; u++) {
-      var arr = arr || [];
-      arr.push({"id": "i"+u, "type": "user-img", "dataset": [["url", "hey"]], "init": "sample-images/"+(u+1)+".png"});
-   }
-   for(var u = 0; u < 13; u++) {
-      var arr = arr || [];
-      arr.push({"id": "u"+u, "type": "user-img", "dataset": [["url", "hey"]], "init": "sample-images/"+(u+1)+".png"});
-   }
-   for(var u = 0; u < 13; u++) {
-      var arr = arr || [];
-      arr.push({"id": "e"+u, "type": "user-img", "dataset": [["url", "hey"]], "init": "sample-images/"+(u+1)+".png"});
-   }
-   for(var u = 0; u < 13; u++) {
-      var arr = arr || [];
-      arr.push({"id": "o"+u, "type": "user-img", "dataset": [["url", "hey"]], "init": "sample-images/"+(u+1)+".png"});
-   }
+   var arr = arr || [];
+   arr.push({"id": "msg0", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "Hello Griddles!"});
+   arr.push({"id": "icn1", "type": "author", "dataset": [["hoge","hoge"]], "init": "<div style='padding: 10px;'><center><img src='https://identicons.github.com/40b2bcc96299804ade6b438e85a0bb0e.png' style='width: 100px'></center><br>By daiz.</div>"});
+   arr.push({"id": "a0", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/1.png"});
+   arr.push({"id": "a1", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/2.png"});
+   arr.push({"id": "a2", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/3.png"});
+   arr.push({"id": "a3", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/4.png"});
+   arr.push({"id": "a4", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/5.png"});
+   arr.push({"id": "msg1", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "<b>Javascript!</b>"});
+   arr.push({"id": "a5", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/6.png"});
+   arr.push({"id": "a6", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/7.png"});
+   arr.push({"id": "a7", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/8.png"});
+   arr.push({"id": "msg2", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "<b>HTML5</b>"});
+   arr.push({"id": "a8", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/9.png"});
+   arr.push({"id": "a9", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/10.png"});
+   arr.push({"id": "a10", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/11.png"});
+   arr.push({"id": "a11", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/12.png"});
+   arr.push({"id": "a12", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/13.png"});
+   arr.push({"id": "msg3", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "<a href='https://github.com/daiz713/griddles' target='_blank'>View on GitHub</a>"});
    myApp.renderingCards(arr);
 }
 
