@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles v0.0.7
+ * Griddles v0.0.9
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -17,6 +17,7 @@ griddles.keepIdSrc = [];
 griddles.imageIndexR = 0;
     
 griddles.load = function() {
+    d.getElementsByTagName("body")[0].style.backgroundColor = griddles.layout.background_color;
     d.getElementById("app_icon").src = griddles.layout.app_icon;
     d.getElementById("app_name").innerHTML = griddles.layout.app_name;
     griddles.keepIdSrc = [];
@@ -129,12 +130,25 @@ griddles.getMinStream = function(a) {
 
 griddles.imageIndexR = 0;
 griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n) {
-    content = '<div class="Card" ' + card_id + 'style="display:block; ' + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + hg + tit + '">' + 
+    
+    /* 台紙カラー */
+    var cardhidden = "";
+    var bgColorStyle = "";
+    if((cards[y]).card != undefined && (cards[y]).card == false) {
+        bgColorStyle = "background-color: " + griddles.layout.background_color + "!important;";
+        cardhidden = " CardHidden";
+    }else if((cards[y]).card == undefined || (cards[y]).card == true) {
+        bgColorStyle = "background-color: #fff!important;";
+    }else {
+        bgColorStyle = "background-color: " + (cards[y]).card + "!important;";
+    }
+    
+    content = '<div class="Card '+ cardhidden +'" ' + card_id + 'style="display:block; ' + bgColorStyle + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + hg + tit + '">' + 
     '<div class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
     '</div>';
     $(d.getElementById("stream_" + intMinStream)).append(content);
     lg = griddles.lg;
-    if(type == "user-img") {
+    if(type == "user-img" || type == "user-caption-img") {
          griddles.showImages(griddles.imageIndexR);
     }
     if (y + 1 < lg) {
@@ -201,10 +215,19 @@ griddles.createContent = function(cards, y, n) {
         var tit = "";
     }
     
+    /* キャプション対応 */
+    var capheight = 0;
+    var initCaption = "";
+    if(type == "user-caption-img" && griddles.layout.card_height_px == "auto") {
+        capheight = (cards[y]).caption_height_px;
+        var caph = "height: " + (capheight -5) + "px;";
+        initCaption = "<div class='user-caption' id='caption_"+id+"' style='"+ caph + "'>"+ (cards[y]).caption +"</div>";
+    }
+    
     if (griddles.layout.card_height_px != "auto") {
         var hh = "height: " + (griddles.layout.card_height_px - 6) + "px!important;";
-        var hg = "height: " + (griddles.layout.card_height_px) + "px!important;";
-        ;
+        var hg = "height: " + (griddles.layout.card_height_px + capheight) + "px!important;";
+
     } else {
         var h = "";
         var hh = "";
@@ -213,11 +236,11 @@ griddles.createContent = function(cards, y, n) {
     var v = "";
     var vv = "";
     var ww = griddles.layout.card_width_px - 6;
-    switch (type) {
-        case "user-img":
+      
+        if(type == "user-img" || type == "user-caption-img") {
             var imgSrc = init;
             var imgId = id;
-            init = "<img src='" + "#"  /*init*/+ "' style='display:none;width:" + ww + "px!important;" + hh + "' class='img' id='" + id + "' " + dsr + ">";
+            init = "<img src='#' style='display:none;width:" + ww + "px!important;" + hh + "' class='img' id='" + id + "' " + dsr + ">" + initCaption;
             id = "";
             card_id = 'id="card_' + y + '"';
             dsr = "";
@@ -229,8 +252,9 @@ griddles.createContent = function(cards, y, n) {
                 console.log('読み込み完了: ' + imgSrc);
                 griddles.keepIdSrc.push([imgId, imgSrc]);
                 console.log(document.getElementById("IMAGE").height);
+
                 if (hg == "") {
-                    hg = "height: " + (document.getElementById("IMAGE").offsetHeight + 6) + "px;";
+                    hg = "height: " + (document.getElementById("IMAGE").offsetHeight + 6 + capheight) + "px;";
                 }
                 griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
             }
@@ -239,28 +263,27 @@ griddles.createContent = function(cards, y, n) {
                 init = "";
                 griddles.appearContent(card_id, v, b, w, hg, tit, type+":err", vv, id, dsr, init, intMinStream, cards, y, n);
             }
-            break;
-        case "user-text":
+            
+        }else if(type == "user-text") {
             v = "padding: 15px; font-size:11pt; font-family: 'Open Sans',Meiryo;";
             vv = 'style="width:100%; height: 100%;"';
             id = 'id="' + id + '"';
             card_id = 'id="card_' + y + '"';
             griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
-            break;
-        case "user-free":
+            
+        }else if(type == "user-free") {
             v = "font-family: 'Open Sans' ,Meiryo;";
             vv = 'style="width:100%; height: 100%;"';
             id = 'id="' + id + '"';
             card_id = 'id="card_' + y + '"';
             griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
-            break;
-        default:
+            
+        }else {
             vv = 'style="width:100%; height: 100%;"';
             id = 'id="' + id + '"';
             card_id = 'id="card_' + y + '"';
             griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
-            break;
-    }
+        }
 }
 
 griddles.clicked = function(e) {

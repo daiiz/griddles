@@ -12,6 +12,7 @@ griddles.layout = {
     "page_title": "griddles",
     "app_name": "Griddles",
     "app_icon": "icon.png",
+    "background_color": "#eee",
     "card_width_px": 250,
     "card_height_px": 250,//"auto",
     "card_margin_bottom": 14,
