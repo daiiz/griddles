@@ -39,7 +39,7 @@ griddlesの用途を指定するために、``assets/griddles-manifest.js`` を�
 | available_width_percent | ``整数値`` | ウィンドウの横幅の使用領域（％）|
 | tooltip | ``"yes"`` または ``"no"`` | ツールチップ |
 | cards | ``配列`` | 表示するカードアイテム(JSON)の配列 |
-| cardOnClick | ``関数`` | カードがクリックされたときの動作 |
+| cardOnClick | ``関数`` | カードがクリックされたときの動作を記述|
 
 以上は全て必須の設定項目です。
 
