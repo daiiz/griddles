@@ -61,4 +61,5 @@ griddlesの用途を指定するために、``assets/griddles-manifest.js`` を�
 + 次に、griddles.render を``true``にします。
 + griddles.load() を実行すればカードが表示されます。
 
-
+========
+デモ： http://jsdo.it/da.iz./griddles
