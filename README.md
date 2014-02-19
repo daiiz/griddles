@@ -5,4 +5,4 @@ griddles
 
 + 使い方： https://github.com/daiz713/griddles/wiki/How-to-use 
 + デモ： http://jsdo.it/da.iz./griddles
-+ Playground： Coming soon!
++ Playground： http://goo.gl/w7G7Uy
