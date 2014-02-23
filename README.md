@@ -8,7 +8,7 @@ griddles
 
 | packages | Link to download |
 |:--------:|-----------------------|
-|A         | https://sites.google.com/site/daizapps/griddles/stable-package-A.zip |
+|A         | https://github.com/daiz713/griddles/archive/stable-package-A.zip |
 
 ## Documents & Demos
 |        | Documents |
