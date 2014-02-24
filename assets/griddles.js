@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles v0.0.12
+ * Griddles v0.0.14
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -250,6 +250,7 @@ griddles.createContent = function(cards, y, n) {
             var img = document.getElementById("IMAGE");
             /* xhrが不要な場合*/
             if(griddles.webPage == true || griddles.phonegap == true) {
+                 img.src = "#";  //追加
                  img.src = imgSrc;
                  img.width = ww;
                  img.onload = function(e) {
@@ -276,6 +277,7 @@ griddles.createContent = function(cards, y, n) {
                  xhr.responseType = 'blob';
                  xhr.onload = function(e) {
                     griddles.keepIdSrc.push([imgId, window.webkitURL.createObjectURL(this.response)]);
+                    //img.src = "#";
                     img.width = ww;
                     img.src = window.webkitURL.createObjectURL(this.response);
                     img.onload = function(e) {

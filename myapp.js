@@ -7,6 +7,7 @@ myApp.load = function(e) {
    var arr = arr || [];
    arr.push({"id": "msg0", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "Hello Griddles!", card: "#EEEE22"});
    arr.push({"id": "author", "type": "user-caption-img", "dataset": [["hoge","hoge"]], "init": "https://identicons.github.com/40b2bcc96299804ade6b438e85a0bb0e.png", "card": "#fff", "caption": "By daiz.", "caption_height_px": 30});
+   arr.push({"id": "author1", "type": "user-caption-img", "dataset": [["hoge","hoge"]], "init": "https://identicons.github.com/40b2bcc96299804ade6b438e85a0bb0e.png", "card": "#fff", "caption": "Hello!", "caption_height_px": 30});
    arr.push({"id": "a0", "type": "user-caption-img", "dataset": [["hoge","hoge"]], "init": "sample-images/1.png", "card": false, "caption": "キャプション1（台紙なし）", "caption_height_px": 30});
    arr.push({"id": "a1", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/2.png"});
    arr.push({"id": "a2", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/3.png"});
@@ -22,6 +23,7 @@ myApp.load = function(e) {
    arr.push({"id": "a10", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/11.png"});
    arr.push({"id": "a11", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/12.png"});
    arr.push({"id": "a12", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/13.png"});
+   arr.push({"id": "a13", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/13.png"});
    arr.push({"id": "msg3", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "<a href='https://github.com/daiz713/griddles' target='_blank'>View on GitHub</a>"});
    myApp.renderingCards(arr);
 }
