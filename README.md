@@ -1,4 +1,4 @@
-griddles
+[griddles](https://github.com/daiz713/griddles/wiki/_pages)
 ========
 
 カードUIを自動生成するJavaScriptフレームワーク
@@ -19,5 +19,9 @@ griddles
 |--------|----------------------------------------------------|
 | デモ | http://jsdo.it/da.iz./griddles |
 | Playground | http://goo.gl/w7G7Uy |
-| サンプルアプリ | https://github.com/daiz713/GochisoCard |
+
+サンプルアプリ
++ https://github.com/daiz713/GochisoCard 
++ https://github.com/daiz713/Scrapbook
+                   
 
