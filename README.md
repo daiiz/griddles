@@ -4,11 +4,8 @@
 カードUIを自動生成するJavaScriptフレームワーク
 
 ## Downloads
-ここでは griddles の stable-package がダウンロードできます。なるべく最新のものをお使い下さい。
-
-| packages | Link to download |
-|:--------:|-----------------------|
-|A         | https://github.com/daiz713/griddles/archive/stable-package-A.zip |
+以下のページで griddles のパッケージがダウンロードできます。なるべく最新のものをお使い下さい。
+https://github.com/daiz713/griddles/releases
 
 ## Documents & Demos
 |        | Documents |
