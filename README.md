@@ -18,7 +18,6 @@ https://github.com/daiz713/griddles/releases
 | Playground | http://goo.gl/w7G7Uy |
 
 サンプルアプリ
-+ https://github.com/daiz713/GochisoCard 
 + https://github.com/daiz713/Scrapbook
                    
 
