@@ -239,7 +239,7 @@ griddles.createContent = function(cards, y, n) {
     var st = intMaxStream_value - griddles.keepShowLength; //新たに表示した分の長さ
     var ll = griddles.layout.load_limit;
     if (st < winHeight_value * ll || ll == false) { // $0
-        /* 新たな表示分の長さがウィンドウの２倍未満の長さである場合 */
+        /* 新たな表示分の長さがウィンドウのll倍未満の長さである場合 */
         //console.info("y: "+y);
         griddles.keepContentsNo_y = y;
         
