@@ -26,6 +26,7 @@ griddles.layout = {
     "stream_margin_right_px": 7,
     "available_width_percent": 95,
     "tooltip": "no",
+    "load_limit": 2,
     "cards": [
     ]
 };
