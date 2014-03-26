@@ -38,7 +38,7 @@ html {
 }
 
 body {
-    background-color: #E4E4E4;  /*background-color: #eee; */
+    background-color: #eee;
     margin: 0 0 0 0;
     font-weight: 300;
     /*overflow-y: scroll;*/
@@ -98,13 +98,13 @@ body {
 }
 
 .Card {
-    /*-webkit-border-radius: 3px;*/
-    /*border-radius: 3px;*/
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     background-color: #fff;
-    border: 0px solid #B3B3B3; /* border: 1px solid #d8d8d8; */
-    border-bottom-width: 1px;  /* border-bottom-width: 2px; */
+    border: 1px solid #d8d8d8;
+    border-bottom-width: 2px;
     border-top-width: 0;
     vertical-align: top;
 }

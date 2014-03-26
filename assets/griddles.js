@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles v0.0.18
+ * Griddles v0.0.17
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -178,7 +178,7 @@ griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, 
         bgColorStyle = "background-color: " + (cards[y]).card + "!important;";
     }
     
-    content = '<div class="Card ' + cardhidden + '" ' + card_id + 'style="display:block; ' + bgColorStyle + v + 'margin-bottom:' + b + 'px; width:' + (w-2) + 'px;' + hg + tit + '">' + 
+    content = '<div class="Card ' + cardhidden + '" ' + card_id + 'style="display:block; ' + bgColorStyle + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + hg + tit + '">' + 
     '<div class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
     '</div>';
     $(d.getElementById("stream_" + intMinStream)).append(content);
@@ -292,7 +292,7 @@ griddles.createContent = function(cards, y, n) {
         if (type == "user-img" || type == "user-caption-img") {
             var imgSrc = init;
             var imgId = id;
-            init = "<center><img src='#' style='display:none;width:" + ww + "px!important;" + hh + "' class='img' id='" + id + "' " + dsr + "></center>" + initCaption;
+            init = "<img src='#' style='display:none;width:" + ww + "px!important;" + hh + "' class='img' id='" + id + "' " + dsr + ">" + initCaption;
             id = "";
             card_id = 'id="card_' + y + '"';
             dsr = "";
