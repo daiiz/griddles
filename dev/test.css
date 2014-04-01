@@ -1,0 +1,49 @@
+﻿.adjust_panel {
+  /*background-color: #ccc;*/
+}
+
+.AppBar {
+    background-color: #312319;/*#312319;*/
+    color: #000!important;
+    /*border-bottom: 1px solid #d3d3d3!important;*/
+    /*box-shadow: 0 0px 0px rgba(0, 0, 0, 0.3)!important;*/
+    height: 52px!important;
+}
+
+.MenuBox {
+ float: left!important;
+ margin-left: 55px!important;
+ margin-top: -45px!important;
+}
+
+#select_menu{
+ /*height: 40px;*/
+ margin-top: 8px;
+ border: 0px;
+ font-family: Meiryo!important;
+ background-color: #312319;
+ color:#fff;
+ font-size: 12pt;
+ cursor: pointer;
+ -webkit-appearance:none;
+ -moz-appearance:none;
+ -ms-appearance:none;
+ -o-appearance:none;
+ appearance:none;
+ text-indent: .01px; /*FF用*/
+ text-overflow: "";  /*FF用*/
+ outline:0; 
+}
+
+.AppIconArea {
+   margin-top: 2px!important;
+   margin-left: 2px!important;
+}
+
+#stage {
+  margin-top: -5px!important;
+}
+
+.Card {
+  cursor: pointer;
+}
