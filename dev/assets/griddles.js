@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles v0.0.23b
+ * Griddles v0.0.29b
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -204,6 +204,8 @@ griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, 
     /* 台紙カラー */
     var cardhidden = "";
     var bgColorStyle = "";
+    var resvh = "";
+    var strcolor = "";
     if ((cards[y]).card != undefined && (cards[y]).card == false) {
         bgColorStyle = "background-color: " + griddles.layout.background_color + "!important;";
         cardhidden = " CardHidden";
@@ -213,8 +215,19 @@ griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, 
         bgColorStyle = "background-color: " + (cards[y]).card + "!important;";
     }
     
+    /* reservation_height機能 */
+    var prefix_user = ((cards[y]).type).search(/^user\-/);
+    if((cards[y]).reservation_height != undefined && griddles.layout.card_height_px == "auto" && prefix_user == -1) {
+       resvh = "height: " + (cards[y]).reservation_height + "px!important; ";
+    }
+    
+    /* 文字色指定機能 */
+    var prefix_userText = ((cards[y]).type).search(/^user\-text/);
+    if(prefix_userText != -1) {
+       strcolor = "color: " + (cards[y]).color + "!important; ";
+    }
     content = '<div class="Card ' + cardhidden + '" ' + card_id + 'style="display:block; ' + bgColorStyle + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + hg + tit + '">' + 
-    '<div class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
+    '<div style="'+ strcolor + resvh +'position:relative; z-index:11;" class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
     '</div>';
     $(d.getElementById("stream_" + intMinStream)).append(content);
     lg = griddles.lg;
@@ -226,8 +239,9 @@ griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, 
     for(var da = 0; da < griddles.max_stream_nums; da++) {
          griddles.streamManager[da] = d.getElementById("stream_"+da).offsetHeight;
     }
-
-    if(w > griddles.layout.card_width_px) {
+    
+    /* wider width機能 */
+    if(w > griddles.layout.card_width_px && griddles.layout.max_streams_limit != false) {
        // wider width の場合
        var stm0h = griddles.streamManager[0];//d.getElementById("stream_"+0).offsetHeight;
        for(var da = 0; da < griddles.max_stream_nums; da++) {
@@ -321,6 +335,7 @@ griddles.createContent = function(cards, y, n) {
             var tit = "";
         }
         
+        /*
         if((cards[y].wide) != undefined && (cards[y].wide) == true) {
            intMinStream = 0;
            w = (w * griddles.max_stream_nums) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1));
@@ -330,6 +345,7 @@ griddles.createContent = function(cards, y, n) {
              $(d.getElementById("stream_" + 0)).append(content);
            }
         }
+        */
         
         /* キャプション対応 */
         var capheight = 0;
@@ -360,14 +376,23 @@ griddles.createContent = function(cards, y, n) {
         var ww = griddles.layout.card_width_px - 2; //カード目一杯の横幅
             ww = ww - p_r - p_l;
         
-        if((cards[y].wide) != undefined && (cards[y].wide) == true) {
+        /* wider width機能 */
+        if((cards[y].wide) != undefined && griddles.layout.max_streams_limit != false &&(cards[y].wide) == true) {
+            intMinStream = 0;
+            w = (w * griddles.max_stream_nums) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1));
+            var df = intMaxStream_value - d.getElementById("stream_"+0).offsetHeight;
+            if(df > 0) {
+              content = '<div class="adjust_panel" style="width:'+ griddles.layout.card_width_px +'px; height:'+ df +'px"></div>';
+              $(d.getElementById("stream_" + 0)).append(content);
+            }
+
             ww = ((griddles.layout.card_width_px* griddles.max_stream_nums) - 2) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1)) - p_r - p_l;
         }
         
         if (type == "user-img" || type == "user-caption-img") {
             var imgSrc = init;
             var imgId = id;
-            init = "<img src='#' style='display:none;width:" + ww + "px!important;" + hh + "' class='img' id='" + id + "' " + dsr + ">" + initCaption;
+            init = "<img src='#' style='position:relative; z-index:22; display:none;width:" + ww + "px!important;" + hh + "' class='img' id='" + id + "' " + dsr + ">" + initCaption;
             id = "";
             card_id = 'id="card_' + y + '"';
             dsr = "";
@@ -408,8 +433,12 @@ griddles.createContent = function(cards, y, n) {
                         console.log('読み込み完了: ' + imgSrc);
                         console.log(document.getElementById("IMAGE").height);
                         if (hg == "") {
+                            /*
                             hfc = document.getElementById("IMAGE").offsetHeight + 6 + capheight;
                             hg = "height: " + hfc + "px;";
+                            */
+                            hg = "height: " + (document.getElementById("IMAGE").offsetHeight + (p_t + p_b + 2) + capheight) + "px;";
+                            
                         }
                         griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
                     }
@@ -443,6 +472,7 @@ griddles.createContent = function(cards, y, n) {
             vv = 'style="width:100%; height: 100%;"';
             id = 'id="' + id + '"';
             card_id = 'id="card_' + y + '"';
+            
             griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
         }
     } else {

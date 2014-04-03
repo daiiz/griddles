@@ -13,10 +13,11 @@ myApp.load = function(e) {
    arr.push({"id": "a2", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/3.png"});
    arr.push({"id": "a3", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/4.png"});
    arr.push({"id": "a4", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/5.png"});
-   arr.push({"id": "msg1", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "<b>Javascript!</b>", card: "#FFBB22", paddings: [36, 36, 36, 36]});
+   arr.push({"id": "msg1", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "<b>Javascript!</b>", card: "#FFBB22", paddings: [36, 36, 36, 36], "color": "#fff"});
+   arr.push({"id": "test", "type": "my-test", "dataset": [["hoge","hoge"]], "init": "", "reservation_height": 300});
    arr.push({"wide": true, "id": "a5", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/6.png"});
    arr.push({"id": "a6", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/7.png"});
-   arr.push({"id": "a7", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/8.png"});
+   arr.push({"id": "a7", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/8.png", "reservation_height": 300});
    arr.push({"id": "msg2", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "つくりたいものをつくる", card: "#BBEE33"});
    arr.push({"id": "a8", "type": "user-caption-img", "dataset": [["hoge","hoge"]], "init": "sample-images/9.png", "caption": "キャプション9", "caption_height_px": 30, "card": true});
    arr.push({"id": "a9", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/10.png"});
@@ -24,7 +25,7 @@ myApp.load = function(e) {
    arr.push({"id": "a11", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/12.png"});
    arr.push({"id": "a12", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/13.png"});
    arr.push({"id": "a13", "type": "user-img", "dataset": [["hoge","hoge"]], "init": "sample-images/13.png"});
-   arr.push({"id": "msg3", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "<a href='https://github.com/daiz713/griddles' target='_blank'>View on GitHub</a>"});
+   arr.push({"wide": true, "id": "msg3", "type": "user-text", "dataset": [["hoge","hoge"]], "init": "<a href='https://github.com/daiz713/griddles' target='_blank'>View on GitHub</a>"});
    myApp.renderingCards(arr);
 }
 
