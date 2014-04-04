@@ -16,9 +16,9 @@ griddles.webPage = true;
 
 griddles.layout = {
     "page_title": "griddles",
-    "app_icon": "icon.png",
-    "app_bar_color": "#000",       //New!
-    "app_bar_bg_color": "#fff",    //New!
+    "page_icon": "icon.png",
+    "page_bar_color": "#000",       //New!
+    "page_bar_bg_color": "#fff",    //New!
     "background_color": "#E5E5E5",
     "card_width_px": 250, //360
     "card_height_px": 250,/* OR "auto" */

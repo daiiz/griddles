@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles v0.0.29b
+ * Griddles v0.0.31b
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -18,6 +18,32 @@ griddles.imageIndexR = 0;
 griddles.keepContentsNo_y = 0 - 1;
 griddles.max_stream_nums = 0;
 griddles.streamManager = [];
+griddles.auto_id_index = 0;
+
+/* カードの互換性確保
+ * griddles.layout.cardsに追加するときにコール */
+griddles.card = function(a) {
+   if(a.dataset == undefined) {
+      a.dataset = [["auto","auto"]];
+   }
+   if(a.type == undefined) {
+      a.type = "default-text";
+   }
+   if((a.type).search(/^user\-/) != -1) {
+      a.type = (a.type).replace(/^user\-/, "default-");
+   }
+   if(a.type == "default-caption-img" && a.caption == undefined) {
+      a.caption = "";
+   }
+   if(a.type == "default-caption-img" && a.caption_height_px == undefined) {
+      a.caption_height_px  = 30;
+   }
+   if(a.id == undefined) {
+      a.id = griddles.layout.page_title + "_" + griddles.auto_id_index;
+      griddles.auto_id_index++;
+   }
+   return a;
+}
 
 griddles.manifest_compatibility = function() {
    if(griddles.layout.load_limit == undefined) {
@@ -38,12 +64,11 @@ griddles.manifest_compatibility = function() {
 griddles.load = function() {
     /* 初期化 */
     d.getElementsByTagName("body")[0].style.backgroundColor = griddles.layout.background_color;
-    d.getElementById("app_icon").src = griddles.layout.app_icon;
-    //d.getElementById("app_name").innerHTML = griddles.layout.app_name;
-    d.getElementById("app_bar").style.backgroundColor = griddles.layout.app_bar_bg_color;
-    d.getElementById("select_menu").style.backgroundColor = griddles.layout.app_bar_bg_color;
-    //d.getElementById("select_menu").style.background = "linear-gradient("+griddles.layout.app_bar_bg_color+","+griddles.layout.app_bar_bg_color+");";
-    d.getElementById("select_menu").style.color = griddles.layout.app_bar_color;
+    d.getElementById("page_icon").src = griddles.layout.page_icon;
+    d.getElementById("app_bar").style.backgroundColor = griddles.layout.page_bar_bg_color;
+    d.getElementById("select_menu").style.backgroundColor = griddles.layout.page_bar_bg_color;
+    //d.getElementById("select_menu").style.background = "linear-gradient("+griddles.layout.page_bar_bg_color+","+griddles.layout.page_bar_bg_color+");";
+    d.getElementById("select_menu").style.color = griddles.layout.page_bar_color;
    
     griddles.keepIdSrc = [];
     griddles.imageIndexR = 0;
@@ -231,7 +256,7 @@ griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, 
     '</div>';
     $(d.getElementById("stream_" + intMinStream)).append(content);
     lg = griddles.lg;
-    if (type == "user-img" || type == "user-caption-img") {
+    if (type == "default-img" || type == "default-caption-img") {
         griddles.showImages(griddles.imageIndexR);
     }
     
@@ -356,10 +381,10 @@ griddles.createContent = function(cards, y, n) {
         var p_b = paddings[2];
         var p_l = paddings[3];
         
-        if (type == "user-caption-img" && griddles.layout.card_height_px == "auto") {
+        if (type == "default-caption-img" && griddles.layout.card_height_px == "auto") {
             capheight = (cards[y]).caption_height_px;
             var caph = "height: " + (capheight - 5) + "px;";
-            initCaption = "<div class='user-caption' id='caption_" + id + "' style='" + caph + "'>" + (cards[y]).caption + "</div>";
+            initCaption = "<div class='default-caption' id='caption_" + id + "' style='" + caph + "'>" + (cards[y]).caption + "</div>";
         }
         
         if (griddles.layout.card_height_px != "auto") {
@@ -389,7 +414,7 @@ griddles.createContent = function(cards, y, n) {
             ww = ((griddles.layout.card_width_px* griddles.max_stream_nums) - 2) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1)) - p_r - p_l;
         }
         
-        if (type == "user-img" || type == "user-caption-img") {
+        if (type == "default-img" || type == "default-caption-img") {
             var imgSrc = init;
             var imgId = id;
             init = "<img src='#' style='position:relative; z-index:22; display:none;width:" + ww + "px!important;" + hh + "' class='img' id='" + id + "' " + dsr + ">" + initCaption;
@@ -451,7 +476,7 @@ griddles.createContent = function(cards, y, n) {
                 xhr.send();
             }
         
-        } else if (type == "user-text") {
+        } else if (type == "default-text") {
             v = "padding-top: "+p_t+"px;" + "padding-right: "+p_r+"px;" + "padding-bottom: "+p_b+"px;" + "padding-left: "+p_l+"px;";
             v = v + "/*padding: 15px;*/ font-size:11pt; font-family: 'Open Sans',Meiryo;";
             vv = 'style="width:100%; height: 100%;"';
@@ -459,7 +484,7 @@ griddles.createContent = function(cards, y, n) {
             card_id = 'id="card_' + y + '"';
             griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
         
-        } else if (type == "user-free") {
+        } else if (type == "default-free") {
             v = "padding-top: "+p_t+"px;" + "padding-right: "+p_r+"px;" + "padding-bottom: "+p_b+"px;" + "padding-left: "+p_l+"px;";
             v = v + "font-family: 'Open Sans' ,Meiryo;";
             vv = 'style="width:100%; height: 100%;"';

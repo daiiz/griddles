@@ -8,23 +8,23 @@
     color: #000;
 }
 
-.user-img, .user-caption-img {
+.default-img, .default-caption-img {
     -webkit-border-radius: 3px;
     border-radius: 3px;
     margin-bottom: -5px;
 }
 
-.user-text {
+.default-text {
     overflow: hidden;
 }
 
-.user-free {
+.default-free {
     font-weight: bold;
     font-size: 14pt;
     overflow: hidden;
 }
 
-.user-caption {
+.default-caption {
    font-family: Meiryo;
    font-size: 12pt;
    overflow: hidden;
