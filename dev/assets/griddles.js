@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles v0.0.31b
+ * Griddles v0.0.34b
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -41,6 +41,9 @@ griddles.card = function(a) {
    if(a.id == undefined) {
       a.id = griddles.layout.page_title + "_" + griddles.auto_id_index;
       griddles.auto_id_index++;
+   }
+   if(a.init == undefined) {
+      a.init = "";
    }
    return a;
 }
@@ -601,6 +604,15 @@ $(window).on("scroll", function() {
             }
         } else {
             console.info(":: 読み込むものはありません。");
+            var restart = griddles.layout.scrollEnd();
+            if(restart == true) {
+               griddles.keppWorkingFlag = 0;
+               console.info(":: RE:: 新しく読み込みます。");
+               griddles.renderCardsAuto(griddles.max_stream_nums);
+               // 少しだけscrollbarをアップさせる
+            }else {
+               // console.info(":: RE:: false");
+            }
         }
     }
 });

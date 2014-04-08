@@ -37,3 +37,7 @@ griddles.layout = {
 griddles.layout.cardOnClick = function(j) {
     console.log(j);
 }
+
+griddles.layout.scrollEnd = function() {
+   return false;
+}
