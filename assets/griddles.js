@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles v0.0.17
+ * Griddles v0.0.34b
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -17,18 +17,62 @@ griddles.keepIdSrc = [];
 griddles.imageIndexR = 0;
 griddles.keepContentsNo_y = 0 - 1;
 griddles.max_stream_nums = 0;
+griddles.streamManager = [];
+griddles.auto_id_index = 0;
+
+/* カードの互換性確保
+ * griddles.layout.cardsに追加するときにコール */
+griddles.card = function(a) {
+   if(a.dataset == undefined) {
+      a.dataset = [["auto","auto"]];
+   }
+   if(a.type == undefined) {
+      a.type = "default-text";
+   }
+   if((a.type).search(/^user\-/) != -1) {
+      a.type = (a.type).replace(/^user\-/, "default-");
+   }
+   if(a.type == "default-caption-img" && a.caption == undefined) {
+      a.caption = "";
+   }
+   if(a.type == "default-caption-img" && a.caption_height_px == undefined) {
+      a.caption_height_px  = 30;
+   }
+   if(a.id == undefined) {
+      a.id = griddles.layout.page_title + "_" + griddles.auto_id_index;
+      griddles.auto_id_index++;
+   }
+   if(a.init == undefined) {
+      a.init = "";
+   }
+   return a;
+}
 
 griddles.manifest_compatibility = function() {
    if(griddles.layout.load_limit == undefined) {
       griddles.layout.load_limit = false;
+   }
+   /* for older than v0.0.23b */
+   if(griddles.layout.max_streams_limit == undefined) {
+      griddles.layout.max_streams_limit = false;
+   }
+   if(griddles.layout.card_paddings == undefined) {
+      griddles.layout.card_paddings = [6, 6, 6, 6];
+   }
+   if(griddles.layout.card_tooltip == undefined) {
+      griddles.layout.card_tooltip = false;
    }
 }
 
 griddles.load = function() {
     /* 初期化 */
     d.getElementsByTagName("body")[0].style.backgroundColor = griddles.layout.background_color;
-    d.getElementById("app_icon").src = griddles.layout.app_icon;
-    d.getElementById("app_name").innerHTML = griddles.layout.app_name;
+    d.getElementById("page_icon").src = griddles.layout.page_icon;
+    d.getElementById("app_bar").style.backgroundColor = griddles.layout.page_bar_bg_color;
+    d.getElementById("select_menu").style.backgroundColor = griddles.layout.page_bar_bg_color;
+    //d.getElementById("select_menu").style.background = "linear-gradient("+griddles.layout.page_bar_bg_color+","+griddles.layout.page_bar_bg_color+");";
+    d.getElementById("select_menu").style.color = griddles.layout.page_bar_color;
+   
     griddles.keepIdSrc = [];
     griddles.imageIndexR = 0;
     /* マニフェストの互換性確保 */
@@ -60,6 +104,10 @@ griddles.load = function() {
         var sr = griddles.layout.stream_margin_right_px
         var max_stream_nums = Math.floor((w85pc) / (sl + sw + sr));
         
+        if(griddles.layout.max_streams_limit != false && max_stream_nums > griddles.layout.max_streams_limit) {
+           max_stream_nums = griddles.layout.max_streams_limit;
+        }
+        
         var left = (w85pc) - (max_stream_nums * (sl + sw + sr));
         var margin_left = Math.floor(left / 2);
         console.log("stream: " + max_stream_nums);
@@ -87,8 +135,10 @@ griddles.renderStream = function(n, w, a) {
     var y;
     w = w + "px";
     var dom = "";
+    griddles.streamManager = [];
     for (y = 0; y < n; y++) {
         dom = dom + '<div id="stream_' + y + '" class="Stream" style="width:' + w + ';margin-left:' + a[0] + ';margin-right:' + a[1] + ';"></div>';
+        griddles.streamManager.push(0);
     }
     d.getElementById("stage").innerHTML = dom;
     griddles.stream_num = n;
@@ -128,8 +178,8 @@ griddles.setStreamHeights = function(n) {
     for (var x = 0; x < n; x++) {
         res.push(document.getElementById("stream_" + x).offsetHeight);
     }
-    //console.log(res);
-    return res;
+    //return res;
+    return griddles.streamManager;
 }
 
 griddles.getMinStream = function(a) {
@@ -145,7 +195,19 @@ griddles.getMinStream = function(a) {
     return min_index;
 }
 
-/* 最も大きな長さを持つストリームの番号を返す */
+griddles.getMaxStream = function(a) {
+    var max_index = 0;
+    var max_value = a[max_index];
+    for (var e = 0; e < a.length; e++) {
+        if (a[e] > max_value) {
+            max_index = e;
+            max_value = a[e];
+        }
+    }
+    return max_index;
+}
+
+/* 最も大きな長さを持つストリームの長さを返す */
 griddles.getMaxStream_value = function(a) {
     var max_index = 0;
     var max_value = a[max_index];
@@ -164,11 +226,14 @@ griddles.getWindowHeight_value = function() {
 }
 
 griddles.imageIndexR = 0;
-griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n) {
+griddles.marginTops = [];
+griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww) {
 
     /* 台紙カラー */
     var cardhidden = "";
     var bgColorStyle = "";
+    var resvh = "";
+    var strcolor = "";
     if ((cards[y]).card != undefined && (cards[y]).card == false) {
         bgColorStyle = "background-color: " + griddles.layout.background_color + "!important;";
         cardhidden = " CardHidden";
@@ -178,14 +243,45 @@ griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, 
         bgColorStyle = "background-color: " + (cards[y]).card + "!important;";
     }
     
+    /* reservation_height機能 */
+    var prefix_user = ((cards[y]).type).search(/^user\-/);
+    if((cards[y]).reservation_height != undefined && griddles.layout.card_height_px == "auto" && prefix_user == -1) {
+       resvh = "height: " + (cards[y]).reservation_height + "px!important; ";
+    }
+    
+    /* 文字色指定機能 */
+    var prefix_userText = ((cards[y]).type).search(/^user\-text/);
+    if(prefix_userText != -1) {
+       strcolor = "color: " + (cards[y]).color + "!important; ";
+    }
     content = '<div class="Card ' + cardhidden + '" ' + card_id + 'style="display:block; ' + bgColorStyle + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + hg + tit + '">' + 
-    '<div class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
+    '<div style="'+ strcolor + resvh +'position:relative; z-index:11;" class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
     '</div>';
     $(d.getElementById("stream_" + intMinStream)).append(content);
     lg = griddles.lg;
-    if (type == "user-img" || type == "user-caption-img") {
+    if (type == "default-img" || type == "default-caption-img") {
         griddles.showImages(griddles.imageIndexR);
     }
+    
+    /* ストリームの長さは配列で保持 */
+    for(var da = 0; da < griddles.max_stream_nums; da++) {
+         griddles.streamManager[da] = d.getElementById("stream_"+da).offsetHeight;
+    }
+    
+    /* wider width機能 */
+    if(w > griddles.layout.card_width_px && griddles.layout.max_streams_limit != false) {
+       // wider width の場合
+       var stm0h = griddles.streamManager[0];//d.getElementById("stream_"+0).offsetHeight;
+       for(var da = 0; da < griddles.max_stream_nums; da++) {
+          if(da != 0) {
+             var diff = stm0h - griddles.streamManager[da];
+             content = '<div class="adjust_panel" style="width:'+ griddles.layout.card_width_px +'px; height:'+ diff +'px"></div>';
+             $(d.getElementById("stream_" + da)).append(content);
+             griddles.streamManager[da] = griddles.streamManager[da] + diff;
+          }
+       }
+    }
+    
     if (y + 1 < lg) {
         /* 再帰 */
         griddles.createContent(cards, y + 1, n);
@@ -261,23 +357,41 @@ griddles.createContent = function(cards, y, n) {
         for (var q = 0; q < ds.length; q++) {
             dsr = dsr + "data-" + ds[q][0] + "='" + ds[q][1] + "'";
         }
-        if (griddles.layout.tooltip == "yes" && (init.search(/^http/i) == -1)) {
+        if (griddles.layout.card_tooltip == true && (init.search(/^http/i) == -1)) {
             var tit = "title='" + init + "';";
         } else {
             var tit = "";
         }
-
+        
+        /*
+        if((cards[y].wide) != undefined && (cards[y].wide) == true) {
+           intMinStream = 0;
+           w = (w * griddles.max_stream_nums) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1));
+           var df = intMaxStream_value - d.getElementById("stream_"+0).offsetHeight;
+           if(df > 0) {
+             content = '<div class="adjust_panel" style="width:'+ griddles.layout.card_width_px +'px; height:'+ df +'px"></div>';
+             $(d.getElementById("stream_" + 0)).append(content);
+           }
+        }
+        */
+        
         /* キャプション対応 */
         var capheight = 0;
         var initCaption = "";
-        if (type == "user-caption-img" && griddles.layout.card_height_px == "auto") {
+        var paddings = (cards[y]).paddings || griddles.layout.card_paddings;
+        var p_t = paddings[0];
+        var p_r = paddings[1];
+        var p_b = paddings[2];
+        var p_l = paddings[3];
+        
+        if (type == "default-caption-img" && griddles.layout.card_height_px == "auto") {
             capheight = (cards[y]).caption_height_px;
             var caph = "height: " + (capheight - 5) + "px;";
-            initCaption = "<div class='user-caption' id='caption_" + id + "' style='" + caph + "'>" + (cards[y]).caption + "</div>";
+            initCaption = "<div class='default-caption' id='caption_" + id + "' style='" + caph + "'>" + (cards[y]).caption + "</div>";
         }
         
         if (griddles.layout.card_height_px != "auto") {
-            var hh = "height: " + (griddles.layout.card_height_px - 6) + "px!important;";
+            var hh = "height: " + (griddles.layout.card_height_px - 2 - p_t - p_b) + "px!important;";
             var hg = "height: " + (griddles.layout.card_height_px + capheight) + "px!important;";
         
         } else {
@@ -285,14 +399,28 @@ griddles.createContent = function(cards, y, n) {
             var hh = "";
             var hg = "";
         }
-        var v = "";
+        var v = "padding-top: "+p_t+"px;" + "padding-right: "+p_r+"px;" + "padding-bottom: "+p_b+"px;" + "padding-left: "+p_l+"px;";//"";
         var vv = "";
-        var ww = griddles.layout.card_width_px - 6;
+        var ww = griddles.layout.card_width_px - 2; //カード目一杯の横幅
+            ww = ww - p_r - p_l;
         
-        if (type == "user-img" || type == "user-caption-img") {
+        /* wider width機能 */
+        if((cards[y].wide) != undefined && griddles.layout.max_streams_limit != false &&(cards[y].wide) == true) {
+            intMinStream = 0;
+            w = (w * griddles.max_stream_nums) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1));
+            var df = intMaxStream_value - d.getElementById("stream_"+0).offsetHeight;
+            if(df > 0) {
+              content = '<div class="adjust_panel" style="width:'+ griddles.layout.card_width_px +'px; height:'+ df +'px"></div>';
+              $(d.getElementById("stream_" + 0)).append(content);
+            }
+
+            ww = ((griddles.layout.card_width_px* griddles.max_stream_nums) - 2) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1)) - p_r - p_l;
+        }
+        
+        if (type == "default-img" || type == "default-caption-img") {
             var imgSrc = init;
             var imgId = id;
-            init = "<img src='#' style='display:none;width:" + ww + "px!important;" + hh + "' class='img' id='" + id + "' " + dsr + ">" + initCaption;
+            init = "<img src='#' style='position:relative; z-index:22; display:none;width:" + ww + "px!important;" + hh + "' class='img' id='" + id + "' " + dsr + ">" + initCaption;
             id = "";
             card_id = 'id="card_' + y + '"';
             dsr = "";
@@ -308,14 +436,14 @@ griddles.createContent = function(cards, y, n) {
                     //console.log(document.getElementById("IMAGE").height);
                     
                     if (hg == "") {
-                        hg = "height: " + (document.getElementById("IMAGE").offsetHeight + 6 + capheight) + "px;";
+                        hg = "height: " + (document.getElementById("IMAGE").offsetHeight + (p_t + p_b + 2) + capheight) + "px;";
                     }
-                    griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
+                    griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
                 }
                 img.onerror = function() {
                     console.error('読み込めない画像がありました： ' + imgSrc);
                     init = "";
-                    griddles.appearContent(card_id, v, b, w, hg, tit, type + ":err", vv, id, dsr, init, intMinStream, cards, y, n);
+                    griddles.appearContent(card_id, v, b, w, hg, tit, type + ":err", vv, id, dsr, init, intMinStream, cards, y, n, ww);
                 }
             }
 
@@ -333,39 +461,47 @@ griddles.createContent = function(cards, y, n) {
                         console.log('読み込み完了: ' + imgSrc);
                         console.log(document.getElementById("IMAGE").height);
                         if (hg == "") {
+                            /*
                             hfc = document.getElementById("IMAGE").offsetHeight + 6 + capheight;
                             hg = "height: " + hfc + "px;";
+                            */
+                            hg = "height: " + (document.getElementById("IMAGE").offsetHeight + (p_t + p_b + 2) + capheight) + "px;";
+                            
                         }
-                        griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
+                        griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
                     }
                     img.onerror = function() {
                         console.error('読み込めない画像がありました： ' + imgSrc);
                         init = "";
-                        griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
+                        griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
                     }
                 }
                 xhr.send();
             }
         
-        } else if (type == "user-text") {
-            v = "padding: 15px; font-size:11pt; font-family: 'Open Sans',Meiryo;";
+        } else if (type == "default-text") {
+            v = "padding-top: "+p_t+"px;" + "padding-right: "+p_r+"px;" + "padding-bottom: "+p_b+"px;" + "padding-left: "+p_l+"px;";
+            v = v + "/*padding: 15px;*/ font-size:11pt; font-family: 'Open Sans',Meiryo;";
             vv = 'style="width:100%; height: 100%;"';
             id = 'id="' + id + '"';
             card_id = 'id="card_' + y + '"';
-            griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
+            griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
         
-        } else if (type == "user-free") {
-            v = "font-family: 'Open Sans' ,Meiryo;";
+        } else if (type == "default-free") {
+            v = "padding-top: "+p_t+"px;" + "padding-right: "+p_r+"px;" + "padding-bottom: "+p_b+"px;" + "padding-left: "+p_l+"px;";
+            v = v + "font-family: 'Open Sans' ,Meiryo;";
             vv = 'style="width:100%; height: 100%;"';
             id = 'id="' + id + '"';
             card_id = 'id="card_' + y + '"';
-            griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
+            griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
         
         } else {
+            v = "padding-top: "+p_t+"px;" + "padding-right: "+p_r+"px;" + "padding-bottom: "+p_b+"px;" + "padding-left: "+p_l+"px;"
             vv = 'style="width:100%; height: 100%;"';
             id = 'id="' + id + '"';
             card_id = 'id="card_' + y + '"';
-            griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n);
+            
+            griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
         }
     } else {
         griddles.keepShowLength = intMaxStream_value;
@@ -402,11 +538,11 @@ griddles.clicked = function(e) {
         if (griddles.phonegap == true) {
             // phonegapアプリに対応
             // タブレット用のおすすめデザインに書き換え
-            d.getElementsByClassName("AppBar")[0].style.height = "55px";
-            d.getElementsByClassName("AppIconArea")[0].style.marginTop = "3px";
-            d.getElementsByClassName("AppIconArea")[0].style.marginLeft = "15px";
-            d.getElementsByClassName("Icon")[0].style.cursor = "default";
-            d.getElementById("stage").style.marginTop = "-8px";
+            //d.getElementsByClassName("AppBar")[0].style.height = "55px";
+            //d.getElementsByClassName("AppIconArea")[0].style.marginTop = "3px";
+            //d.getElementsByClassName("AppIconArea")[0].style.marginLeft = "15px";
+            //d.getElementsByClassName("Icon")[0].style.cursor = "default";
+            //d.getElementById("stage").style.marginTop = "-8px";
         }
     } else {
         console.log("PC");
@@ -468,6 +604,15 @@ $(window).on("scroll", function() {
             }
         } else {
             console.info(":: 読み込むものはありません。");
+            var restart = griddles.layout.scrollEnd();
+            if(restart == true) {
+               griddles.keppWorkingFlag = 0;
+               console.info(":: RE:: 新しく読み込みます。");
+               griddles.renderCardsAuto(griddles.max_stream_nums);
+               // 少しだけscrollbarをアップさせる
+            }else {
+               // console.info(":: RE:: false");
+            }
         }
     }
 });

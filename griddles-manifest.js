@@ -1,5 +1,5 @@
 ﻿/**
- * Griddles v0.0.23b
+ * Griddles v0.0.34b
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -17,18 +17,18 @@ griddles.webPage = true;
 griddles.layout = {
     "page_title": "griddles",
     "page_icon": "icon.png",
-    "page_bar_color": "#000",       //New!
-    "page_bar_bg_color": "#fff",    //New!
-    "background_color": "#E5E5E5",
-    "card_width_px": 250, //360
-    "card_height_px": 250,/* OR "auto" */
+    "page_bar_color": "#000",         //New!
+    "page_bar_bg_color": "#fff",      //New!
+    "background_color": "#e5e5e5",
+    "card_width_px": 250,
+    "card_height_px": "auto",         // OR INT Number
     "card_paddings": [6, 6, 6, 6],    //New!
     "card_margin_bottom": 18,
     "stream_margin_left_px": 9,
     "stream_margin_right_px": 9,
     "available_width_percent": 95,
-    "max_streams_limit": 2,   //New!
-    "card_tooltip": false,          //Changed! true OR false
+    "max_streams_limit": false,       //New!
+    "card_tooltip": false,            //Changed! true OR false
     "load_limit": 2,
     "cards": [
     ]
@@ -38,6 +38,14 @@ griddles.layout.cardOnClick = function(j) {
     console.log(j);
 }
 
+var restart_time = 1;
 griddles.layout.scrollEnd = function() {
-   return false;
+   
+   var arr = griddles.layout.cards;
+   for(var i = 0; i < 100; i++) {
+       arr.push(griddles.card({"init": restart_time +"回目_"+ i, "reservation_height": Math.floor(Math.random()*200), "card": "#"+Math.floor(Math.random()*0xFFFFFF).toString(16)}));
+   }
+   restart_time++;
+   
+   return true;
 }
