@@ -3,21 +3,13 @@
 
 カードUIを自動生成するJavaScriptフレームワーク
 
-## Downloads
-以下のページで griddles のパッケージがダウンロードできます。なるべく最新のものをお使い下さい。
-https://github.com/daiz713/griddles/releases
+## How To Use
+1. このリポジトリをクローン、または、[こちらのページ](https://github.com/daiz713/griddles/releases)からダウンロードしてgriddles.jsの最新版を入手する
+1. サンプルのソースコードや[Design Guide](https://github.com/daiz713/griddles/wiki/Design-Guide)を参考にしてページをデザインする
 
-## Documents & Demos
-|        | Documents |
-|--------|----------------------------------------------------|
-| 使い方 |https://github.com/daiz713/griddles/wiki/How-to-use |
+## Samples
 
-|        | Demos & Sample apps |
-|--------|----------------------------------------------------|
-| デモ | http://jsdo.it/da.iz./griddles |
-| Playground | http://goo.gl/w7G7Uy |
-
-サンプルアプリ
 + https://github.com/daiz713/Scrapbook
+    + griddles.js を用いたchrome拡張機能です。
                    
 
