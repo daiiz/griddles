@@ -8,8 +8,9 @@
 1. サンプルのソースコードや[Design Guide](https://github.com/daiz713/griddles/wiki/Design-Guide)を参考にしてページをデザインする
 
 ## Samples
+                   
++ http://griddles-card.appspot.com/
+    + griddles.js-Demos
 
 + https://github.com/daiz713/Scrapbook
     + griddles.js を用いたchrome拡張機能です。
-                   
-
