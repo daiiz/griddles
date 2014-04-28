@@ -5,7 +5,7 @@
 
 ## How To Use
 1. このリポジトリをクローン、または、[こちらのページ](https://github.com/daiz713/griddles/releases)からダウンロードしてgriddles.jsの最新版を入手する
-1. サンプルのソースコードや[Design Guide](https://github.com/daiz713/griddles/wiki/Design-Guide)を参考にしてページをデザインする
+1. サンプルのソースコードや[Design Guide](https://github.com/daiz713/griddles/wiki/Design-Guide)を参考にして griddles-manifest.js を編集し、ページをデザインする
 
 ## Samples
                    
