@@ -1,7 +1,7 @@
 [griddles](https://github.com/daiz713/griddles/wiki/_pages)
 ========
 
-カードUIを自動生成するJavaScriptフレームワーク
+カードUIを自動生成するJavaScriptフレームワーク  
 一部アニメーション等にjQueryを使用しています。
 
 ## How To Use
