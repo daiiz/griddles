@@ -101,7 +101,7 @@ griddles.manifest_compatibility = function() {
    }
    /* for older than v0.0.34b */
    if(griddles.layout.clear == undefined) {
-      griddles.layout.clear = false;
+      griddles.layout.clear = true;
    }
 }
 
