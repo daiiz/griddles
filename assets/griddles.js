@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles v0.0.34b
+ * Griddles v0.0.36b
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -8,7 +8,8 @@ var griddles = griddles || {};
 
 /* Renderer */
 var d = document;
-var scrollbar_width = 15;
+var scrollbar_width = 16;
+var appbar_height = 52;
 
 griddles.stream_num = 0;
 griddles.pre_width = 0;
@@ -19,6 +20,42 @@ griddles.keepContentsNo_y = 0 - 1;
 griddles.max_stream_nums = 0;
 griddles.streamManager = [];
 griddles.auto_id_index = 0;
+
+
+/* カード１枚あたりの使用可能最大横幅を取得する */
+griddles.getFullWidth = function() {
+   var w_px = window.innerWidth - scrollbar_width;
+   return w_px;
+}
+
+/* カード１枚あたりの使用可能最大縦幅を取得する */
+griddles.getFullHeight = function(n) {
+   var h_px;
+   if(n == undefined) {
+      n = 0;
+   }
+   if(window.innerHeight > window.innerWidth) {
+      // 画面の縦幅の方が長い場合の処理
+      if(n == 0) {
+         h_px = window.innerHeight - appbar_height;
+      }else if(n > 0){
+         // 横幅の1/nを縦幅とする(int)
+         h_px = Math.floor((window.innerWidth - scrollbar_width)/n);
+      }
+   }else {
+      h_px = window.innerHeight - appbar_height;
+   }
+   return h_px;
+}
+
+
+/* 与えられたIdをもつカードまでジャンプする */
+/* location.href = "#xxx" の拡張版 */
+griddles.gotoCardId = function(caid, ms) {
+  var tgtOffset = $("#" + caid).offset();
+  var tgtTop = tgtOffset.top;
+  $("html, body").animate({"scrollTop": tgtTop - appbar_height}, ms);
+}
 
 /* カードの互換性確保
  * griddles.layout.cardsに追加するときにコール */
@@ -61,6 +98,10 @@ griddles.manifest_compatibility = function() {
    }
    if(griddles.layout.card_tooltip == undefined) {
       griddles.layout.card_tooltip = false;
+   }
+   /* for older than v0.0.34b */
+   if(griddles.layout.clear == undefined) {
+      griddles.layout.clear = false;
    }
 }
 
@@ -565,6 +606,7 @@ window.addEventListener("load", griddles.load, false);
 d.getElementById("main").addEventListener("click", griddles.clicked, false);
 
 document.getElementById("select_menu").addEventListener("change", function() {
+  if(griddles.layout.clear == true) {
     if (griddles.phonegap == true) {
     // 何もしない
     } else {
@@ -577,6 +619,7 @@ document.getElementById("select_menu").addEventListener("change", function() {
         }
         console.log("stream cleared");
     }
+  }
 }, false);
 
 griddles.timer = false;

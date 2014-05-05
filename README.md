@@ -2,6 +2,7 @@
 ========
 
 カードUIを自動生成するJavaScriptフレームワーク
+一部アニメーション等にjQueryを使用しています。
 
 ## How To Use
 1. このリポジトリをクローン、または、[こちらのページ](https://github.com/daiz713/griddles/releases)からダウンロードしてgriddles.jsの最新版を入手する
