@@ -5,7 +5,8 @@
 一部アニメーション等にjQueryを使用しています。
 
 ## How To Use
-1. このリポジトリをクローン、または、[こちらのページ](https://github.com/daiz713/griddles/releases)からダウンロードしてgriddles.jsの最新版を入手する
+1. このリポジトリをクローンしてgriddles.jsの最新版を入手する
+1. griddlesを使用するために必要なリソースをまとめたパッケージ（フォルダ）を[作成する](https://github.com/daiz713/griddles/wiki/create-a-new-package)
 1. サンプルのソースコードや[Design Guide](https://github.com/daiz713/griddles/wiki/Design-Guide)を参考にして griddles-manifest.js を編集し、ページをデザインする
 
 ## Samples
