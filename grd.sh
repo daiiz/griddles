@@ -5,7 +5,7 @@
 # Edit > EOL conversion > UNIX format
 
 echo :::
-echo \#grd v0.0.1
+echo \#grd v0.0.2
 if test $1 = "create" || test $1 = "sample1" 
 then
   
@@ -25,42 +25,44 @@ then
   then
      mkdir ~/griddles-packages/$2
      path=~/griddles-packages/$2
+     codedir="griddles-files"
      echo [echo] $1: $path
      echo [echo] extpend griddles package in this directory.
      
      echo [echo] configuring of the minimum package of griddles...
+     echo [echo] copying files from $codedir/.
      #copy icon
      echo [echo] copying \"icon.png\"...
-     cp icon.png $path/icon.png
+     cp $codedir/icon.png $path/icon.png
   
      #copy manifest js
      if test $1 = "create"
      then
         echo [echo] copying \"min-griddles-manifest.js\" as \"griddles-manifest.js\"...
-        cp min-griddles-manifest.js $path/griddles-manifest.js
+        cp $codedir/min-griddles-manifest.js $path/griddles-manifest.js
      else
         echo [echo] copying \"$1-griddles-manifest.js\" as \"griddles-manifest.js\"...
-        cp $1-griddles-manifest.js $path/griddles-manifest.js
+        cp $codedir/$1-griddles-manifest.js $path/griddles-manifest.js
      fi
      
      #copy index html
      if test $1 = "create"
      then
         echo [echo] copying \"min-index.html\" as \"index.html\"...
-        cp min-index.html $path/index.html
+        cp $codedir/min-index.html $path/index.html
         else
         echo [echo] copying \"$1-index.html\" as \"index.html\"...
-        cp $1-index.html $path/index.html
+        cp $codedir/$1-index.html $path/index.html
      fi
      
      #copy my app js
      if test $1 = "create"
      then
         echo [echo] copying \"min-myapp.js\" as \"myapp.js\"...
-        cp min-myapp.js $path/myapp.js
+        cp $codedir/min-myapp.js $path/myapp.js
      else
         echo [echo] copying \"$1-myapp.js\" as \"myapp.js\"...
-        cp $1-myapp.js $path/myapp.js
+        cp $codedir/$1-myapp.js $path/myapp.js
      fi
      
      #copy README md
@@ -84,19 +86,19 @@ then
      if test $flag = "dev"
      then
         echo [echo] copying \"dev.griddles.js\" as \"assets/griddles.js\"...
-        cp dev.griddles.js $path/assets/griddles.js
+        cp $codedir/dev.griddles.js $path/assets/griddles.js
         echo [echo] copying \"dev.griddles.css\" as \"assets/griddles.css\"...
-        cp dev.griddles.css $path/assets/griddles.css
+        cp $codedir/dev.griddles.css $path/assets/griddles.css
      else
         echo [echo] copying \"griddles.js\" as \"assets/griddles.js\"...
-        cp griddles.js $path/assets/.
+        cp $codedir/griddles.js $path/assets/.
         echo [echo] copying \"griddles.css\" as \"assets/griddles.css\"...
-        cp griddles.css $path/assets/.
+        cp $codedir/griddles.css $path/assets/.
      fi
      
      #copy jQuery js
      echo [echo] copying \"jquery-1.11.0.min.js\" as \"assets/jquery-1.11.0.min.js\"...
-     cp jquery-1.11.0.min.js $path/assets/.
+     cp $codedir/jquery-1.11.0.min.js $path/assets/.
      
      #ending
      echo [echo] configuration of the package has completed.
