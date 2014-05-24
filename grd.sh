@@ -2,10 +2,13 @@
 # $1: command name
 # $2: directory name
 # $3: [option] -dev or -stable
+# $4: [option] -chromeapp
 # Edit > EOL conversion > UNIX format
 
 echo :::
 echo \#grd v0.0.2
+stav="0.0.36"
+devv="0.0.38beta"
 if test $1 = "create" || test $1 = "sample1" 
 then
   
@@ -31,38 +34,48 @@ then
      
      echo [echo] configuring of the minimum package of griddles...
      echo [echo] copying files from $codedir/.
-     #copy icon
-     echo [echo] copying \"icon.png\"...
-     cp $codedir/icon.png $path/icon.png
+
   
      #copy manifest js
+     #copy icon
+     if [ "$3" = "" ]
+     then
+        pfx="_"
+     else
+        pfx="dev"
+     fi
+     
      if test $1 = "create"
      then
         echo [echo] copying \"min-griddles-manifest.js\" as \"griddles-manifest.js\"...
-        cp $codedir/min-griddles-manifest.js $path/griddles-manifest.js
+        cp $codedir/create/$pfx.min-griddles-manifest.js $path/griddles-manifest.js
+        echo [echo] copying \"icon.png\"...
+        cp $codedir/$pfx.icon.png $path/icon.png
      else
         echo [echo] copying \"$1-griddles-manifest.js\" as \"griddles-manifest.js\"...
-        cp $codedir/$1-griddles-manifest.js $path/griddles-manifest.js
+        cp $codedir/$1/$pfx.$1-griddles-manifest.js $path/griddles-manifest.js
+        echo [echo] copying \"icon.png\"...
+        cp $codedir/$pfx.icon.png $path/icon.png
      fi
      
      #copy index html
      if test $1 = "create"
      then
         echo [echo] copying \"min-index.html\" as \"index.html\"...
-        cp $codedir/min-index.html $path/index.html
+        cp $codedir/create/min-index.html $path/index.html
         else
         echo [echo] copying \"$1-index.html\" as \"index.html\"...
-        cp $codedir/$1-index.html $path/index.html
+        cp $codedir/$1/$1-index.html $path/index.html
      fi
      
      #copy my app js
      if test $1 = "create"
      then
         echo [echo] copying \"min-myapp.js\" as \"myapp.js\"...
-        cp $codedir/min-myapp.js $path/myapp.js
+        cp $codedir/create/$pfx.min-myapp.js $path/myapp.js
      else
         echo [echo] copying \"$1-myapp.js\" as \"myapp.js\"...
-        cp $codedir/$1-myapp.js $path/myapp.js
+        cp $codedir/$1/$pfx.$1-myapp.js $path/myapp.js
      fi
      
      #copy README md
@@ -78,9 +91,11 @@ then
      if [ "$3" = "" ]
      then
         flag="stable"
+        ver=$stav
      elif [ "$3" = "-dev" ]
      then
         flag="dev"
+        ver=$devv
      fi
      
      if test $flag = "dev"
@@ -100,13 +115,24 @@ then
      echo [echo] copying \"jquery-1.11.0.min.js\" as \"assets/jquery-1.11.0.min.js\"...
      cp $codedir/jquery-1.11.0.min.js $path/assets/.
      
+     #copy chromeapp-background.js
+     #copy chromeapp-manifest.js
+     chromeapp_memo="chrome app 'manifest.json' & 'background.js': NO."
+     if [ "$4" = "-chromeapp" ]
+     then
+        echo [echo] copying resources chrome app...
+        cp chromeapp-background.js $path/background.js
+        cp chromeapp-manifest.json $path/manifest.json
+        chromeapp_memo="chrome app 'manifest.json' & 'background.js': YES."
+     fi
+     
      #ending
      echo [echo] configuration of the package has completed.
      echo [echo] outputting configuration to a file: \"/log.txt\".
      {
        echo "\#grd v0.0.1"
        echo `date`
-       echo "~$path build@$1@$flag"
+       echo "~$path build@$1@$flag:$ver"
        echo "├── index.html"
        echo "├── icon.png"
        echo "├── my-app.js"
@@ -117,6 +143,8 @@ then
        echo "    ├── griddles.js"
        echo "    ├── griddles.css"
        echo "    └── jquery-1.11.0.min.js"
+       echo ""
+       echo "$chromeapp_memo"
      } >> $path/log.txt
      
      echo Congratulations! SUCCESSED!

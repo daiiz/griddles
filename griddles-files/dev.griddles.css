@@ -2,7 +2,7 @@
  * prefix「user-」で始まるセレクタ以外のスタイルを変更すると、
  * 全体のレイアウトが大きく乱れることがあります。
  */
- /* v0.0.36b+ */
+ /* v0.0.38dev */
 
 .user-appbar {
     background-color: #fff;
@@ -17,6 +17,7 @@
 
 .default-text {
     overflow: hidden;
+    cursor: default;
 }
 
 .default-free {
@@ -174,5 +175,6 @@ body {
 }
 
 .Card {
-    cursor: pointer;
+    /*cursor: pointer;*/
+    cursor: default;
 }

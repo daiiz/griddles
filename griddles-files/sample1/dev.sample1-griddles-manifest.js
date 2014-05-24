@@ -9,12 +9,8 @@ var griddles = griddles || {};
  /* User settings */
 griddles.msgLoading = "+griddles";
 
-/* ３つのうちどれか一つをtrueにする */
-griddles.chromeApp = false;
-griddles.phonegap = false;
-griddles.webPage = true;
-
-/* 暫定 */
+/* flags */
+griddles.xhrimg = false;
 griddles.cca = false;
 
 griddles.layout = {
@@ -25,14 +21,14 @@ griddles.layout = {
     "background_color": "#e5e5e5",
     "card_width_px": 250,
     "card_height_px": "auto",         // OR INT Number
-    "card_paddings": [10, 10, 10, 10],    //New!
+    "card_paddings": [6, 6, 6, 6],    //New!
     "card_margin_bottom": 18,
     "stream_margin_left_px": 9,
     "stream_margin_right_px": 9,
     "available_width_percent": 95,
     "max_streams_limit": false,       //New!
     "card_tooltip": false,            //Changed! true OR false
-    "load_limit": false,
+    "load_limit": 2,
     "cards": [
     ]
 };
@@ -43,6 +39,12 @@ griddles.layout.cardOnClick = function(j) {
 
 var restart_time = 1;
 griddles.layout.scrollEnd = function() {
-   return false;
+   
+   var arr = griddles.layout.cards;
+   for(var i = 0; i < 100; i++) {
+       arr.push(griddles.card({"init": restart_time +"回目_"+ i, "reservation_height": Math.floor(Math.random()*200), "card": "#"+Math.floor(Math.random()*0xFFFFFF).toString(16)}));
+   }
+   restart_time++;
+   
+   return true;
 }
-

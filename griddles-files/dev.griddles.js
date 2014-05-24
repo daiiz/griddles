@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles v0.0.36b+
+ * Griddles v0.0.38dev
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -85,7 +85,19 @@ griddles.card = function(a) {
    return a;
 }
 
+/* manifestの互換性 */
 griddles.manifest_compatibility = function() {
+   if(griddles.xhrimg == undefined || griddles.xhrimg == false) {
+      griddles.xhrimg = false;
+      griddles.chromeApp = false;
+      griddles.webPage = true;
+   }
+   
+   if(griddles.xhrimg == true) {
+      griddles.chromeApp = true;
+      griddles.webPage = false;
+   }
+   
    if(griddles.layout.load_limit == undefined) {
       griddles.layout.load_limit = false;
    }
@@ -353,11 +365,11 @@ griddles.showImages = function(r) {
         targetImg.src = target[1];
         
         targetImg.onload = function() { // Operaでは動作しない（理由？）
-            if (griddles.phonegap == true) {
-                d.getElementById(target[0]).style.display = "block";
-            } else {
-                var imgid = "#" + target[0];
-                $(imgid).slideDown();
+            var imgid = "#" + target[0];
+            if(navigator.userAgent.indexOf('Android') > 0) {
+                 d.getElementById(target[0]).style.display = "block";
+            }else {
+                 $(imgid).slideDown();
             }
         }
         targetImg.onerror = function() {
@@ -517,7 +529,7 @@ griddles.createContent = function(cards, y, n) {
                             hfc = document.getElementById("IMAGE").offsetHeight + 6 + capheight;
                             hg = "height: " + hfc + "px;";
                             */
-                            hg = "height: " + (document.getElementById("IMAGE").offsetHeight + (p_t + p_b + 2) + capheight) + "px;";
+                            hg = "height: " + (document.getElementById("IMAGE").offsetHeight + (p_t + p_b + 2-2) + capheight) + "px;";
                             
                         }
                         griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
@@ -669,6 +681,15 @@ window.addEventListener("click", function(e) {
 },false);
 /* ここまで */
 
+/* 新規 */
+/* 擬似aタグ */
+griddles.openBrowserTab = function(url) { 
+    var a = document.createElement('a'); 
+    a.href = url; 
+    a.target='_blank'; 
+    a.click(); 
+}
+/* ^o^ */
 
 $(window).on("scroll", function() {
     var sh = $(document).height();
