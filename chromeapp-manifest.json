@@ -1,10 +1,9 @@
 ﻿{
-  "name": "test",
-  "description": "test",
+  "name": "MyChromeApp",
+  "description": "my chrome app",
   "manifest_version": 2,
   "minimum_chrome_version": "23",
-  "version": "0.1.1",
-  "offline_enabled": true,
+  "version": "0.0.1",
   "icons": {
     "48": "icon.png"
   },
@@ -13,7 +12,9 @@
       "scripts": ["background.js"]
     }
   },
+  "offline_enabled": true,
   "permissions": [
-    "<all_urls>", "storage"
+    "<all_urls>", 
+    "storage"
   ]
 }

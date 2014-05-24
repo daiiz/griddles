@@ -1,7 +1,7 @@
 ﻿#!/bin/sh
 # $1: command name
 # $2: directory name
-# $3: [option] -dev or -stable
+# $3: -dev or -stable
 # $4: [option] -chromeapp
 # Edit > EOL conversion > UNIX format
 
@@ -38,7 +38,7 @@ then
   
      #copy manifest js
      #copy icon
-     if [ "$3" = "" ]
+     if [ "$3" = "-stable" ]
      then
         pfx="_"
      else
@@ -88,7 +88,7 @@ then
      
      #copy griddles js
      #copy griddles css
-     if [ "$3" = "" ]
+     if [ "$3" = "-stable" ]
      then
         flag="stable"
         ver=$stav
