@@ -123,11 +123,12 @@ then
         cp chromeapp-background.js $path/background.js
         cp chromeapp-manifest.json $path/manifest.json
         cp $codedir/on.griddles-chromeapp-flags.js $path/griddles-chromeapp-flags.js
-        chromeapp_memo="chrome app 'manifest.json' & 'background.js': YES."
+        chromeapp_memo="chrome app 'manifest.json' & 'background.js': YES,"
+        ccaflags_memo="griddles-chromeapp-flags: on."
      else
         cp $codedir/off.griddles-chromeapp-flags.js $path/griddles-chromeapp-flags.js
-        chromeapp_memo="chrome app 'manifest.json' & 'background.js': NO."
-        
+        chromeapp_memo="chrome app 'manifest.json' & 'background.js': NO,"
+        ccaflags_memo="griddles-chromeapp-flags: off."
      fi
      
      #ending
@@ -149,6 +150,7 @@ then
        echo "    └── jquery-1.11.0.min.js"
        echo ""
        echo "$chromeapp_memo"
+       echo "$ccaflags_memo"
      } >> $path/log.txt
      
      echo Congratulations! SUCCESSED!
