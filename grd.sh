@@ -38,11 +38,12 @@ then
   
      #copy manifest js
      #copy icon
-     if [ "$3" = "-stable" ]
+     if [ "$3" = "-dev" ]
      then
-        pfx="_"
-     else
         pfx="dev"
+     else
+        # -stable
+        pfx="_"
      fi
      
      if test $1 = "create"
@@ -88,14 +89,13 @@ then
      
      #copy griddles js
      #copy griddles css
-     if [ "$3" = "-stable" ]
-     then
-        flag="stable"
-        ver=$stav
-     elif [ "$3" = "-dev" ]
+     if [ "$3" = "-dev" ]
      then
         flag="dev"
         ver=$devv
+     else
+        flag="stable"
+        ver=$stav
      fi
      
      if test $flag = "dev"
@@ -117,13 +117,17 @@ then
      
      #copy chromeapp-background.js
      #copy chromeapp-manifest.js
-     chromeapp_memo="chrome app 'manifest.json' & 'background.js': NO."
      if [ "$4" = "-chromeapp" ]
      then
         echo [echo] copying resources chrome app...
         cp chromeapp-background.js $path/background.js
         cp chromeapp-manifest.json $path/manifest.json
+        cp $codedir/on.griddles-chromeapp-flags.js $path/griddles-chromeapp-flags.js
         chromeapp_memo="chrome app 'manifest.json' & 'background.js': YES."
+     else
+        cp $codedir/off.griddles-chromeapp-flags.js $path/griddles-chromeapp-flags.js
+        chromeapp_memo="chrome app 'manifest.json' & 'background.js': NO."
+        
      fi
      
      #ending
