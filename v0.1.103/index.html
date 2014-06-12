@@ -10,14 +10,22 @@
      <link rel="stylesheet" type="text/css" href="assets/griddles.css">
    </head>
    <body>
-     <div class="AppBar user-appbar" id="app_bar">
-        <div class="AppIconArea"> 
-           <img src="#" class="Icon" id="page_icon"> <span id="app_name"></span>
+      <!--div class="AppHead" id="app_head"-->
+        <div class="AppBar user-appbar animation open_appbar" id="app_bar">
+           <div class="AppIconArea" id="app_icon_area"> 
+              <img src="#" class="Icon" id="page_icon"> <span id="app_name" class="open_app_name"></span>
+           </div>
+           <div class="MenuBox" id="menu_box">
+               <span id="select_menu"></span>
+           </div>
         </div>
-        <div class="MenuBox">
-            <select id="select_menu"></select>
+        <div class="BaseBar animation" id="base_bar">
+           <div id="base_bar_text" class="open_text"></div>
         </div>
-     </div>
+        <div id="menus" class="menus_close"></div>
+        <div id="plusbtn" class="PlusBtn"></div>
+       <!--/div-->
+     <!--div id="main_blank"></div-->
      <div id="main">
         <div id="stage">
         </div>
@@ -30,6 +38,7 @@
      <script src="griddles-manifest.js"></script>
      <script src="griddles-chromeapp-flags.js"></script>
      <script src="assets/griddles.js"></script>
+     <script src="assets/ActionMenuBar.js"></script>
      <!-- other scripts -->
          <!-- e.g. myapp.js -->
          <script src="myapp.js"></script>

@@ -1,0 +1,10 @@
+﻿使用させて頂いたロゴについて
+
+(1) GitHub
+・ https://github.com/logos から入手しました。
+
+(2) はてなブログ
+・ http://hatenacorp.jp/press/resource から入手しました。
+・ svgファイルをIEで表示し、スクリーンショットを撮ることによってpng画像ファイルとしました。
+
+2014年6月8日

@@ -1,0 +1,343 @@
+﻿/* 注意
+ * prefix「user-」で始まるセレクタ以外のスタイルを変更すると、
+ * 全体のレイアウトが大きく乱れることがあります。
+ */
+ /* v0.0.38dev */
+
+.user-appbar {
+    background-color: #fff;
+    color: #000;
+}
+
+.default-img, .default-caption-img {
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: -5px;
+}
+
+.default-text {
+    overflow: hidden;
+    cursor: default;
+}
+
+.default-free {
+    font-weight: bold;
+    font-size: 14pt;
+    overflow: hidden;
+}
+
+.default-caption {
+   font-family: Meiryo;
+   font-size: 12pt;
+   overflow: hidden;
+   padding-left: 5px;
+}
+
+/* main.css */
+html {
+   /* overflow-y: scroll;*/
+}
+
+body {
+    background-color: #eee;
+    margin: 0 0 0 0;
+    font-weight: 300;
+    /*overflow-y: scroll;*/
+    overflow-x: hidden;
+    font-family: 'Open Sans', sans-serif, Meiryo;
+}
+
+
+.AppBar {
+    z-index: 100;
+    /*margin-top: -90px; 独自消去*/
+    height: 78px;
+    text-align: left;
+    /*position: absolute;fixed;*/
+    width: 100%;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    cursor: default;
+    font-family: 'Open Sans', sans-serif, Meiryo;
+    border-bottom-width: 0px !important;
+    /*box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);*/
+    /*box-shadow: 0px 1px 1px #ccc;*/
+    -webkit-border-radius: 0px !important;
+}
+
+.BaseBar {
+    height: 57px;
+    background-color: #fff;
+    /*margin-top: -20px;*/
+    box-shadow: 0px 1px 1px #ccc;
+    /*position: absolute;*/
+    width: 100%;
+    z-index: 30;
+}
+
+.AppIconArea {
+    margin-top: 13px;
+    margin-left: 35px;
+    font-size: 20pt;
+}
+
+.Icon {
+    width: 52px;  /*48px*/
+    height: 52px; /*48px*/
+    vertical-align: middle;
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+#main {
+    margin-left : auto;
+    margin-right : auto;
+    /*margin-top: 90px; 独自消去*/
+    padding-top: 148px; /*独自追加*//*40 90px*//*148px*/
+}
+
+#main_blank {
+    height: 148px;
+}
+
+#stage {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.Stream {
+    float: left;
+}
+
+.TypeTxt {
+    padding: 10px;
+}
+
+.Card {
+    /*-webkit-border-radius: 3px;
+    border-radius: 3px;*/
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #fff;
+    /*border: 1px solid #d8d8d8;*//* 独自変更 */
+    /*border-bottom-width: 2px;*/ /* 独自変更 */
+    box-shadow: 0px 1px 1px #BBB4A5;
+    border-top-width: 0;
+    vertical-align: top;
+}
+
+.CardHidden {
+    border: 0px!important;
+    box-shadow: 0px 0px 0px #BBB4A5!important;
+}
+
+.MenuBox {
+    float: right;
+    margin-right: 35px;
+    margin-top: -38px;
+    position: relative;
+    z-index: 99;
+}
+
+/* New Design */
+.adjust_panel {
+    /*background-color: #ccc;*/
+}
+
+.AppBar {
+    background-color: #fff;/*#312319;*/
+    /*#312319;*/
+    color: #000!important;
+    /*border-bottom: 1px solid #d3d3d3!important;*/
+    /*box-shadow: 0 0px 0px rgba(0, 0, 0, 0.3)!important;*/
+    height: 56px!important; /*52px*/
+}
+
+.MenuBox {
+    float: left!important;
+    margin-left: 64px!important; /* 55 */
+    margin-top: -38px!important; /*-45*/
+}
+
+#select_menu {
+    /*height: 40px;*/
+    margin-top: 8px;
+    border: 0px;
+    font-family: Meiryo!important;
+    background-color: #312319;
+    color: #fff;
+    font-size: 12pt;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    text-indent: .01px;
+    /*FF用*/
+    text-overflow: "";
+    /*FF用*/
+    outline: 0;
+}
+
+.AppIconArea {
+    margin-top: 0px!important;/*2*/
+    margin-left: 2px!important;
+}
+
+#stage {
+    margin-top: -5px!important;
+}
+
+.Card {
+    /*cursor: pointer;*/
+    cursor: default;
+}
+
+/* newDesign */
+#base_bar_text  {
+    padding-top: 74px;
+    font-size: 15px;
+    font-family: Meiryo, arial;
+    margin-left: 25px;
+}
+
+.AppHead {
+    position: absolute;
+    width: 100%;
+    z-index: 30;
+}
+
+.AppBar {
+    position: fixed;
+    width: 100%;
+    z-index: 31;
+}
+
+.BaseBar {
+    position: fixed;
+    width: 100%;
+    z-index: 30;
+    height: 113px;
+    /*margin-top: 56px;*/
+}
+
+
+.open_appbar {
+   transition-duration: 0.3s;
+   height: 56px!important;
+}
+
+.close_appbar {
+   transition-duration: 0.3s;
+   height: 0px!important;
+   transition-delay: 0.4s;
+}
+
+.open_basebar {
+   transition-duration: 0.4s;
+   height: 113px;
+   transition-delay: 0.3s;
+}
+
+.close {
+   /* basebar */
+   transition-duration: 0.8s;
+   height: 0px!important;
+}
+
+.close_text {
+   transition-duration: 0.2s;
+   /*margin-left: -100%!important;*/ /*-600*/
+   color: rgba(0,0,255,0) ;
+}
+
+.open_text {
+   transition-duration: 0.4s;/*0.8s*/
+   /*margin-left: 25px!important;*/
+   color: #000;
+   transition-delay: 0.5s;
+}
+
+.open_app_name {
+  transition-duration: 0.5s;
+  margin-left: 64px!important;/*55*/
+}
+
+.close_app_name {
+  transition-duration: 0.3s;
+  margin-top: -60px!important;
+  transition-delay: 0.4s;
+}
+
+.open_icon {
+  transition-duration: 0.5s;
+  margin-left: 2px!important;
+}
+
+.close_icon {
+  transition-duration: 0.3s;
+  margin-top: -60px!important;
+  transition-delay: 0.4s;
+}
+
+/* menus */
+#menus {
+   width: 100%;
+   background-color: #FFF;
+   z-index: 29;
+   position: fixed;
+   /*border: 1px solid #ccc;*/
+   overflow-y: scroll;
+   overflow-x: hidden;
+}
+
+.menus_open {
+   transition-duration: 0.4s;
+   height: 100%;
+}
+
+.menus_close {
+   transition-duration: 0.4s;
+   height: 0px;
+}
+
+.list_menu {
+   height: 38px;
+   border: 1px solid #eee;
+   margin-top: -1px;
+   padding-top: 16px;
+   font-size: 15px;
+   font-family: Meiryo, arial;
+   padding-left: 25px;
+}
+
+.list_menu:hover {
+   transition-duration: 1s;
+   background-color: #f0f0f0;
+}
+
+.PlusBtn {
+   position: fixed;
+   display: none;
+   background-color: #000;
+   font-size: 14px;
+   color: #fff;
+   opacity: 0.6;
+   padding: 15px;
+   padding-left: 20px;
+   padding-right: 20px;
+   margin-left: 20px;
+   border-radius: 16px;
+   font-family: Meiryo, arial;
+   z-index: 28;
+}
+/*
+.ImgShow {
+   transition-duration: 1s;
+   display: block!important;
+}
+*/
+

@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles v0.0.36b
+ * Griddles
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -20,7 +20,6 @@ griddles.keepContentsNo_y = 0 - 1;
 griddles.max_stream_nums = 0;
 griddles.streamManager = [];
 griddles.auto_id_index = 0;
-
 
 /* カード１枚あたりの使用可能最大横幅を取得する */
 griddles.getFullWidth = function() {
@@ -82,10 +81,25 @@ griddles.card = function(a) {
    if(a.init == undefined) {
       a.init = "";
    }
+   if(a.pushStyle == undefined) {
+      a.pushStyle = "append";
+   }
    return a;
 }
 
+/* manifestの互換性 */
 griddles.manifest_compatibility = function() {
+   if(griddles.xhrimg == undefined || griddles.xhrimg == false) {
+      griddles.xhrimg = false;
+      griddles.chromeApp = false;
+      griddles.webPage = true;
+   }
+   
+   if(griddles.xhrimg == true) {
+      griddles.chromeApp = true;
+      griddles.webPage = false;
+   }
+   
    if(griddles.layout.load_limit == undefined) {
       griddles.layout.load_limit = false;
    }
@@ -103,17 +117,73 @@ griddles.manifest_compatibility = function() {
    if(griddles.layout.clear == undefined) {
       griddles.layout.clear = true;
    }
+   if(griddles.cca == undefined) {
+      griddles.cca = false;
+   }
+   if(griddles.layout.cards == undefined) {
+      griddles.layout.cards = [];
+   }
+   /* for older than v0.0.39 */
+   griddles.layout.card_width_px = 0;
+   griddles.layout.stream_margin_left_px = 0;
+   griddles.layout.stream_margin_right_px = 0;
+   griddles.layout.card_margin_bottom =  0;
+   griddles.layout.card_paddings =  [0, 0, 0, 0];
 }
+
+griddles.setCardBaseDesign = function() {
+   var wobj = griddles.layout.window;
+   if(window.innerHeight > window.innerWidth) {
+     // 縦幅 > 横幅 （縦向き）
+     var wobj_p = wobj.portrait;
+     griddles.layout.card_width_px = wobj_p.card_width_px;
+     griddles.layout.stream_margin_left_px = wobj_p.stream_margin_left_px;
+     griddles.layout.stream_margin_right_px = wobj_p.stream_margin_right_px;
+     griddles.layout.card_margin_bottom = wobj_p.card_margin_bottom;
+     griddles.layout.card_paddings = wobj_p.card_paddings;
+     griddles.layout.card_border_radius = wobj_p.card_border_radius;
+   }else {
+     // 縦幅 < 横幅　（横向き）
+     var wobj_l = wobj.landscape;
+     griddles.layout.card_width_px = wobj_l.card_width_px;
+     griddles.layout.stream_margin_left_px = wobj_l.stream_margin_left_px;
+     griddles.layout.stream_margin_right_px = wobj_l.stream_margin_right_px;
+     griddles.layout.card_margin_bottom = wobj_l.card_margin_bottom;
+     griddles.layout.card_paddings = wobj_l.card_paddings;
+     griddles.layout.card_border_radius = wobj_l.card_border_radius;
+   }
+   
+}
+
+griddles.update = function() {
+    var n = document.getElementsByClassName("Stream").length;
+    if(n > 0 && griddles.layout.load_limit == false) {
+       //if(griddles.keppWorkingFlag == 0) {
+          griddles.renderCardsAuto(n);
+       //}else {
+          //console.log("Sorry, Please Try Again.");
+       //}
+    }
+}
+
 
 griddles.load = function() {
     /* 初期化 */
     d.getElementsByTagName("body")[0].style.backgroundColor = griddles.layout.background_color;
     d.getElementById("page_icon").src = griddles.layout.page_icon;
     d.getElementById("app_bar").style.backgroundColor = griddles.layout.page_bar_bg_color;
+    document.getElementById("select_menu").innerHTML = griddles.layout.page_title;
     d.getElementById("select_menu").style.backgroundColor = griddles.layout.page_bar_bg_color;
     //d.getElementById("select_menu").style.background = "linear-gradient("+griddles.layout.page_bar_bg_color+","+griddles.layout.page_bar_bg_color+");";
     d.getElementById("select_menu").style.color = griddles.layout.page_bar_color;
-   
+    
+    /* [0.0.36+]暫定的に追加 */
+    if(griddles.cca == true) {
+      document.getElementsByTagName("body")[0].style.overflowY = "auto";
+      document.getElementsByTagName("html")[0].style.overflowY = "scroll";
+    }
+    /* ここまで */
+    
     griddles.keepIdSrc = [];
     griddles.imageIndexR = 0;
     /* マニフェストの互換性確保 */
@@ -123,6 +193,8 @@ griddles.load = function() {
     var ww = window.innerWidth;
     if (ww != griddles.pre_width || griddles.render == true) {
         console.log("resized!");
+        griddles.hideLeftBottomBtn();
+        griddles.setCardBaseDesign();
         griddles.keepContentsNo_y = 0 - 1;
         griddles.keepShowLength = 0;
         griddles.keppWorkingFlag = 0;
@@ -295,10 +367,24 @@ griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, 
     if(prefix_userText != -1) {
        strcolor = "color: " + (cards[y]).color + "!important; ";
     }
-    content = '<div class="Card ' + cardhidden + '" ' + card_id + 'style="display:block; ' + bgColorStyle + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + hg + tit + '">' + 
+    /* カードの面取り */
+    var crs = griddles.layout.card_border_radius;
+    var crss = "";
+    for(var cs = 0; cs < 4; cs++) {
+       crss = crss + " " + crs[cs] + "px";       
+    }
+    var card_radius = "border-radius:" + crss + "!important;";
+    
+    content = '<div class="Card ' + cardhidden + '" ' + card_id + 'style="display:block; ' + card_radius + bgColorStyle + v + 'margin-bottom:' + b + 'px; width:' + w + 'px;' + hg + tit + '">' + 
     '<div style="'+ strcolor + resvh +'position:relative; z-index:11;" class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
     '</div>';
-    $(d.getElementById("stream_" + intMinStream)).append(content);
+    
+    if(cards[y].pushStyle == "prepend") {
+       $(d.getElementById("stream_" + intMinStream)).prepend(content);
+    }else {
+       $(d.getElementById("stream_" + intMinStream)).append(content);
+    }
+    
     lg = griddles.lg;
     if (type == "default-img" || type == "default-caption-img") {
         griddles.showImages(griddles.imageIndexR);
@@ -343,11 +429,14 @@ griddles.showImages = function(r) {
         targetImg.src = target[1];
         
         targetImg.onload = function() { // Operaでは動作しない（理由？）
-            if (griddles.phonegap == true) {
-                d.getElementById(target[0]).style.display = "block";
-            } else {
-                var imgid = "#" + target[0];
-                $(imgid).slideDown();
+            var imgid = "#" + target[0];
+            if(navigator.userAgent.indexOf('Android') > 0) {
+                 $(imgid).slideDown();
+                 //d.getElementById(target[0]).style.display = "block";
+            }else {
+                 $(imgid).slideDown(); //fadeIn
+                 //d.getElementById(target[0]).style.display = "block";
+                 //d.getElementById(target[0]).className = "ImgShow";
             }
         }
         targetImg.onerror = function() {
@@ -442,7 +531,8 @@ griddles.createContent = function(cards, y, n) {
         }
         var v = "padding-top: "+p_t+"px;" + "padding-right: "+p_r+"px;" + "padding-bottom: "+p_b+"px;" + "padding-left: "+p_l+"px;";//"";
         var vv = "";
-        var ww = griddles.layout.card_width_px - 2; //カード目一杯の横幅
+        // ここ変更あり
+        var ww = griddles.layout.card_width_px /*- 2*/; //カード目一杯の横幅
             ww = ww - p_r - p_l;
         
         /* wider width機能 */
@@ -454,8 +544,8 @@ griddles.createContent = function(cards, y, n) {
               content = '<div class="adjust_panel" style="width:'+ griddles.layout.card_width_px +'px; height:'+ df +'px"></div>';
               $(d.getElementById("stream_" + 0)).append(content);
             }
-
-            ww = ((griddles.layout.card_width_px* griddles.max_stream_nums) - 2) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1)) - p_r - p_l;
+            // ここ変更あり
+            ww = ((griddles.layout.card_width_px* griddles.max_stream_nums) /*- 2*/) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1)) - p_r - p_l;
         }
         
         if (type == "default-img" || type == "default-caption-img") {
@@ -477,7 +567,7 @@ griddles.createContent = function(cards, y, n) {
                     //console.log(document.getElementById("IMAGE").height);
                     
                     if (hg == "") {
-                        hg = "height: " + (document.getElementById("IMAGE").offsetHeight + (p_t + p_b + 2) + capheight) + "px;";
+                        hg = "height: " + (document.getElementById("IMAGE").offsetHeight + (p_t + p_b + 2-2) + capheight) + "px;";
                     }
                     griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
                 }
@@ -506,7 +596,7 @@ griddles.createContent = function(cards, y, n) {
                             hfc = document.getElementById("IMAGE").offsetHeight + 6 + capheight;
                             hg = "height: " + hfc + "px;";
                             */
-                            hg = "height: " + (document.getElementById("IMAGE").offsetHeight + (p_t + p_b + 2) + capheight) + "px;";
+                            hg = "height: " + (document.getElementById("IMAGE").offsetHeight + (p_t + p_b + 2-2) + capheight) + "px;";
                             
                         }
                         griddles.appearContent(card_id, v, b, w, hg, tit, type, vv, id, dsr, init, intMinStream, cards, y, n, ww);
@@ -599,7 +689,6 @@ griddles.clicked = function(e) {
             d.getElementsByTagName("body")[0].style.overflowY = "scroll";
         }
     }
-
 }();
 window.addEventListener("load", griddles.load, false);
 
@@ -633,6 +722,61 @@ $(window).resize("resize", function() {
     }, 200);
 });
 
+/* [0.0.36+]新バージョン導入案 */
+/* aタグ href の代替機能 */
+/* data-griddles-link == "相対パス または 絶対パス" */
+window.addEventListener("click", function(e) {
+  if((e.target.dataset.griddlesLink) != undefined) {
+     if(griddles.cca == true) {
+       if(navigator.userAgent.indexOf('Android') > 0) {
+          // chrome mobile app (Android)
+          window.open(e.target.dataset.griddlesLink);
+       }else {
+          if(chrome.app.window != undefined) {
+             // chrome app
+             if(griddles.cashell == true) {
+                // use a chrome app shell window
+                chrome.app.window.create(e.target.dataset.griddlesLink); //"public/"+
+             }else if(griddles.cashell == false) {
+                // 通常のウェブページ扱い
+                window.open(e.target.dataset.griddlesLink);
+             }
+          }else if(chrome.app.window == undefined){
+             // 通常のウェブページ扱い
+             window.open(e.target.dataset.griddlesLink);
+          }
+       }
+     }else {
+        // 通常のウェブページ扱い
+        window.open(e.target.dataset.griddlesLink);
+     }
+  }
+},false);
+/* ここまで */
+
+/* 新規 */
+/* 擬似aタグ */
+griddles.openBrowserTab = function(url) { 
+    var a = document.createElement('a'); 
+    a.href = url; 
+    a.target='_blank'; 
+    a.click(); 
+}
+/* ^o^ */
+
+
+griddles.showLeftBottomBtn = function() {
+   var h = griddles.getWindowHeight_value();
+   var tgt = document.getElementById("plusbtn");
+   tgt.innerHTML = "新しいカードを表示する";
+   tgt.style.top = (h - 70) + "px";
+   $("#plusbtn").fadeIn();
+}
+
+griddles.hideLeftBottomBtn = function() {
+   $("#plusbtn").fadeOut();
+}
+
 
 $(window).on("scroll", function() {
     var sh = $(document).height();
@@ -652,13 +796,15 @@ $(window).on("scroll", function() {
                griddles.keppWorkingFlag = 0;
                console.info(":: RE:: 新しく読み込みます。");
                griddles.renderCardsAuto(griddles.max_stream_nums);
-               // 少しだけscrollbarをアップさせる
             }else {
                // console.info(":: RE:: false");
             }
         }
     }
 });
+
+
+
 
 
 
