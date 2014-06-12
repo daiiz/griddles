@@ -43,6 +43,7 @@ griddles.layout = {
     "card_tooltip": false,
     "load_limit": false,
     "griddles.layout.clear": false,
+    "cards": [],
     "menu_items": [
         "タップしてメニューを選択",
         "白色カード",
@@ -57,15 +58,26 @@ griddles.layout.cardOnClick = function(j) {
 griddles.layout.menuOnChange = function(j) {
     myApp.menuOnChange(j);
 }
+
 /*
 griddles.layout.scrollEnd = function() {
    return false;
 }
 */
+
 griddles.layout.scrollEnd = function() {
    myApp.scrollEnd();
    return true;
 }
 
+griddles.layout.cards.push(
+    griddles.card(
+        {"card": "#FFF1A8", 
+         "type": "loading_wait", 
+         "init": "<div style='padding: 10px; font-family: Meiryo, Arial; font-size: 13px;'><center>読み込んでいます...</center></div>", 
+         "wide": true
+        }
+    )
+);
 
 

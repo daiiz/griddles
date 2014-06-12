@@ -728,24 +728,7 @@ $(window).resize("resize", function() {
 window.addEventListener("click", function(e) {
   if((e.target.dataset.griddlesLink) != undefined) {
      if(griddles.cca == true) {
-       if(navigator.userAgent.indexOf('Android') > 0) {
-          // chrome mobile app (Android)
-          window.open(e.target.dataset.griddlesLink);
-       }else {
-          if(chrome.app.window != undefined) {
-             // chrome app
-             if(griddles.cashell == true) {
-                // use a chrome app shell window
-                chrome.app.window.create(e.target.dataset.griddlesLink); //"public/"+
-             }else if(griddles.cashell == false) {
-                // 通常のウェブページ扱い
-                window.open(e.target.dataset.griddlesLink);
-             }
-          }else if(chrome.app.window == undefined){
-             // 通常のウェブページ扱い
-             window.open(e.target.dataset.griddlesLink);
-          }
-       }
+        griddles.openAppWindow(e.target.dataset.griddlesLink);
      }else {
         // 通常のウェブページ扱い
         window.open(e.target.dataset.griddlesLink);
@@ -754,9 +737,9 @@ window.addEventListener("click", function(e) {
 },false);
 /* ここまで */
 
-/* 新規 */
 /* 擬似aタグ */
 griddles.openBrowserTab = function(url) { 
+    // url: 外部ページの絶対URLが期待される
     var a = document.createElement('a'); 
     a.href = url; 
     a.target='_blank'; 
@@ -764,6 +747,28 @@ griddles.openBrowserTab = function(url) {
 }
 /* ^o^ */
 
+/* アプリウィンドウ */
+griddles.openAppWindow = function(url) {
+   // url: パッケージ内のページの相対URLが期待される
+   if(navigator.userAgent.indexOf('Android') > 0) {
+       // android
+       window.open(url);
+   }else {
+      if(chrome.app.window != undefined) {
+          // chrome app
+          if(griddles.cashell == true) {
+              // use a chrome app shell window
+              chrome.app.window.create(url); //"public/"+
+          }else if(griddles.cashell == false) {
+              window.open(url);
+          }
+      }else if(chrome.app.window == undefined){
+          // browser
+          window.open(url);
+      }
+   }
+}
+/* ^_^ */
 
 griddles.showLeftBottomBtn = function() {
    var h = griddles.getWindowHeight_value();

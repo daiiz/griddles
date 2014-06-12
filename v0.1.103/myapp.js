@@ -3,6 +3,11 @@
 var myApp = myApp || {};
 
 myApp.load = function(e) {
+  window.setTimeout(myApp.addInfoCard, 500);
+}
+
+myApp.addInfoCard = function() {
+   griddles.layout.cards = [];
    griddles.layout.cards.push(griddles.card({"init": "<span style='font-size: 38px'>Hello, world!</span>"}));
    griddles.layout.cards.push(griddles.card({"init": "<span style='font-size: 38px'>Ver 0.1.103<br></span>Code Name: <b>クロムイエロー</b><br>"}));
    griddles.layout.cards.push(griddles.card({"type": "default-caption-img", "caption": "GitHubページを開く", "dataset": [["url", "https://github.com/daiz713/griddles"]], "init": "imgs/GitHub_Logo.png"}));
@@ -45,7 +50,7 @@ myApp.menuOnChange = function(j) {
     }
     if(j == griddles.layout.menu_items[0]) {
         griddles.layout.cards = [];
-        myApp.load();
+        myApp.addInfoCard();
     }
 }
 
