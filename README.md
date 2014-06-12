@@ -7,7 +7,7 @@
 ## How To Use
 1. このリポジトリをクローンしてgriddlesJSの最新版を入手します。
  ```
-   git clone https://github.com/daiz713/griddles
+   git clone https://github.com/daiz713/griddles.git
  ```
 
 1. 以下のコマンドを実行してgriddlesJSのパッケージを任意の場所にコピーします。
