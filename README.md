@@ -20,7 +20,7 @@
 ## Samples
                    
 + http://griddles-card.appspot.com/
-    + griddles.js-Demos
+    + griddlesJS のデモを集めたページです。古いバージョンのgriddlesJSを使用しているデモもありますので、ご注意ください。
 
 + https://github.com/daiz713/Scrapbook
-    + griddles.js を用いたchrome拡張機能です。
+    + griddlesJS を用いたchrome拡張機能です。
