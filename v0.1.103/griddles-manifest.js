@@ -7,11 +7,12 @@
 var griddles = griddles || {};
 
  /* User settings */
-griddles.msgLoading = "+griddles";
+griddles.msgLoading = "...griddlesJS";
 
-/* flags */
+/* flags 
 griddles.xhrimg = false;
 griddles.cca = false;
+*/
 
 griddles.layout = {
     "page_title": "griddlesJS",
@@ -72,7 +73,8 @@ griddles.layout.scrollEnd = function() {
 
 griddles.layout.cards.push(
     griddles.card(
-        {"card": "#FFF1A8", 
+        {
+         "card": "#FFF1A8", 
          "type": "loading_wait", 
          "init": "<div style='padding: 10px; font-family: Meiryo, Arial; font-size: 13px;'><center>読み込んでいます...</center></div>", 
          "wide": true

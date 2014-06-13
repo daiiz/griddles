@@ -15,6 +15,8 @@ griddles.cashell = false;
       // chrome apps または mobile chrome apps である
       griddles.xhrimg = true;
       griddles.cca = true;
-      console.info("Launched as CHROME APPS IN DESKTOP OR MOBILE MODE.(CADM mode)")
+      console.info("Launched as CHROME APPS IN DESKTOP OR MOBILE MODE.(CADM mode)");
+   }else {
+      console.info("Launched as WEB PAGE IN DESKTOP OR MOBILE MODE.(WPDM mode)");
    }
 })();
