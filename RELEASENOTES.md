@@ -1,5 +1,9 @@
 ### v0.1.103 (Jun 13, 2014)
 * CodeName: chromeyellow
+   * cordova chrome app に対応
+   * append に加え prepend に対応(issue[#16](https://github.com/daiz713/griddles/issues/16))
+   * portrait, landscape のデザインに対応
+   * ページ上部バーの機能およびデザイン改善
 
 ### v0.0.38 (Apr 28, 2014)
 * CodeName: gray
