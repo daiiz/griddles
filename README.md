@@ -24,3 +24,9 @@
 
 + https://github.com/daiz713/Scrapbook
     + griddlesJS を用いたchrome拡張機能です。
+
+## Documents
+
++ http://daiiz.hatenablog.com/category/griddles
+   + griddlesJS について書いたブログ記事です
+               
