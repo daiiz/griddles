@@ -45,7 +45,10 @@ $(function() {
           
             crd("base_bar_text", "close_text", "open_text");
             crd("base_bar", "close", "open_basebar");
-          
+            
+            if(document.getElementById("stage_floatcard") != null) {
+              $("#stage_floatcard").show();
+            }
          }else{
             // 上にスクロール(-)
             if(getScrollLog() <= -100) {
@@ -55,6 +58,9 @@ $(function() {
               crd("app_icon_area", "open_icon", "close_icon");
               crd("menu_box", "open_app_name", "close_app_name");
               crd("app_bar", "open_appbar", "close_appbar");
+              if(document.getElementById("stage_floatcard") != null) {
+                $("#stage_floatcard").fadeOut();
+              }
             }
          }
        }

@@ -62,6 +62,14 @@ myApp.scrollEnd = function() {
    return true;
 }
 
+myApp.iconClicked = function() {
+  if(document.getElementById("test") == null) {
+     griddles.showFloatCard({height:100, marginTop: 0, id: "test"}, "<div><img src='icon.png'</div>");
+  }else {
+     griddles.removeFloatCard("test");
+  }
+}
 
 document.getElementById("base_bar_text").innerHTML = griddles.layout.menu_items[0];
+document.getElementById("page_icon").addEventListener("click", myApp.iconClicked, false);
 window.addEventListener("load", myApp.load, false);

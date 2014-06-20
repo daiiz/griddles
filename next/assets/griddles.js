@@ -349,6 +349,7 @@ griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, 
     '<div style="'+ strcolor + resvh +'position:relative; z-index:11;" class="' + type + '" ' + vv + tit + id + dsr + '>' + init + '</div>' + 
     '</div>';
     
+    
     if(cards[y].pushStyle == "prepend") {
        $(d.getElementById("stream_" + intMinStream)).prepend(content);
     }else {
@@ -710,10 +711,20 @@ window.addEventListener("click", function(e) {
 /* 擬似aタグ */
 griddles.openBrowserTab = function(url) { 
     // url: 外部ページの絶対URLが期待される
+    /*
     var a = document.createElement('a'); 
     a.href = url; 
     a.target='_blank'; 
     a.click(); 
+    */
+    var a = document.getElementById("GRIDDLES_A_TAG");
+    a.href = url;
+    a.target='_blank'; 
+    if(a.click != undefined) {
+       a.click();
+    }else {
+       window.open(url);
+    }
 }
 /* ^o^ */
 
@@ -751,6 +762,50 @@ griddles.showLeftBottomBtn = function() {
 griddles.hideLeftBottomBtn = function() {
    $("#plusbtn").fadeOut();
 }
+
+
+griddles.removeFloatCard = function(id) {
+   $("#" + id).fadeOut("",function() {
+       $("#" + id).remove();
+   });
+}
+
+
+griddles.showFloatCard = function(vals, html) {
+  // 与えられたtopにwide card(id)を表示する
+  // vals = {height, marginTop, id}
+  // (ex) griddles.showFloatCard({height:70, marginTop: 0, id: "test"}, "<div><br>Hey!!<br></div>");
+  if(vals.height != undefined && vals.marginTop != undefined && vals.id != undefined) {
+    if(document.getElementById(vals.id) != undefined) {
+       var dt = new Date();
+       vals.id = vals.id + "_" + dt.getTime();
+    }
+    var w = griddles.layout.card_width_px;
+    var paddings = griddles.layout.card_paddings;
+    var p_t = paddings[0];
+    var p_r = paddings[1];
+    var p_b = paddings[2];
+    var p_l = paddings[3];
+    var v = "padding-top: "+p_t+"px;" + "padding-right: "+p_r+"px;" + "padding-bottom: "+p_b+"px;" + "padding-left: "+p_l+"px;";
+    var ml = +((document.getElementById("stream_0").style.marginLeft).split("px")[0]);
+    w = (w * griddles.max_stream_nums) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1));
+    var card = "<div id="+vals.id+" class='Card FloatCard' style='display: none; box-shadow: 0px 5px 10px rgba(0,0,0,0.4); "+v+" width: "+w+"px; position: fixed; z-index: 27; margin-left: "+ml+"px; height: "+vals.height+"px; margin-top: "+vals.marginTop+"px;'>"+html+"</div>";
+    // 表示領域を確保して表示する
+    if(document.getElementById("stage_floatcard") == null) {
+       $("#stage").append("<div id='stage_floatcard'></div>");
+       $("#stage_floatcard").append(card);
+       $("#"+vals.id).fadeIn();
+    }else {
+       $("#stage_floatcard").append(card);
+       $("#"+vals.id).fadeIn();
+    }
+
+    return vals.id;
+  }else {
+    return false;
+  }
+}
+
 
 
 $(window).on("scroll", function() {
