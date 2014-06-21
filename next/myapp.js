@@ -9,7 +9,7 @@ myApp.load = function(e) {
 myApp.addInfoCard = function() {
    griddles.layout.cards = [];
    griddles.layout.cards.push(griddles.card({"init": "<span style='font-size: 38px'>Hello, world!</span>"}));
-   griddles.layout.cards.push(griddles.card({"init": "<span style='font-size: 38px'>Ver Next<br></span>Code Name: nileblue<b></b><br>"}));
+   griddles.layout.cards.push(griddles.card({"color": "#52A2C5", "init": "<span style='font-size: 38px'>Ver Next<br></span>Code Name: nileblue<b></b><br>"}));
    griddles.layout.cards.push(griddles.card({"type": "default-caption-img", "caption": "GitHubページを開く", "dataset": [["url", "https://github.com/daiz713/griddles"]], "init": "imgs/GitHub_Logo.png"}));
    griddles.layout.cards.push(griddles.card({"type": "default-caption-img", "caption": "griddlesJSの記事を開く", "dataset": [["url", "http://daiiz.hatenablog.com/archive/category/griddles"]], "init": "imgs/hatena_blog.png"}));
    griddles.render = true;  /* important! */

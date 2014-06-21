@@ -99,6 +99,11 @@ griddles.manifest_compatibility = function() {
    griddles.layout.stream_margin_right_px = 0;
    griddles.layout.card_margin_bottom =  0;
    griddles.layout.card_paddings =  [0, 0, 0, 0];
+   
+   /* for older than chromeyellow*/
+   if(griddles.layout.card_string_color == undefined) {
+      griddles.layout.card_string_color = "#000";
+   }
 }
 
 griddles.setCardBaseDesign = function() {
@@ -331,12 +336,14 @@ griddles.appearContent = function(card_id, v, b, w, hg, tit, type, vv, id, dsr, 
     if((cards[y]).reservation_height != undefined && griddles.layout.card_height_px == "auto" && prefix_user == -1) {
        resvh = "height: " + (cards[y]).reservation_height + "px!important; ";
     }
-    
+
     /* 文字色指定機能 */
-    var prefix_userText = ((cards[y]).type).search(/^user\-text/);
-    if(prefix_userText != -1) {
+    if((cards[y]).color != undefined) {
        strcolor = "color: " + (cards[y]).color + "!important; ";
+    }else {
+       strcolor = "color: " + (griddles.layout.card_string_color) + "!important; ";
     }
+
     /* カードの面取り */
     var crs = griddles.layout.card_border_radius;
     var crss = "";
@@ -407,7 +414,6 @@ griddles.showImages = function(r) {
             }else {
                  $(imgid).slideDown(); //fadeIn
                  //d.getElementById(target[0]).style.display = "block";
-                 //d.getElementById(target[0]).className = "ImgShow";
             }
         }
         targetImg.onerror = function() {

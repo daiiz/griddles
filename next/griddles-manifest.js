@@ -20,6 +20,7 @@ griddles.layout = {
     "page_bar_color": "#fff",
     "page_bar_bg_color": "#52A2C5",
     "background_color": "#e5e5e5",
+    "card_string_color": "#000",
     "window": {
         "portrait": {
             "card_width_px": 275,
