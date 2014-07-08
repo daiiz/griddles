@@ -1,0 +1,52 @@
+/* GriddlesJS
+ * default design
+ */
+
+.AppBar {
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+	/* page_bar_bg_color */
+	background-color: #52A2C5!important;
+}
+
+.BaseBar {
+	background-color: #FFF;
+	box-shadow: 0px 1px 1px #ccc;
+	color: #000000;
+	text-align: left;
+}
+
+#base_bar_text {
+	margin-left: 25px;
+}
+.open_text {
+	/* page_bar_color */
+	color: #000000;
+    font-weight: normal;
+    font-size: 15px!important;
+}
+
+#sideLogo {
+	/* side_nav_color */
+	background-color: #ffffff;
+}
+
+#select_menu {
+    /* nav-title */
+    color: #000;
+}
+
+.hamburger {
+	/* hamburger_color */
+	background-color: #FFF;
+}
+
+
+.FloatCard {
+    background-color: #FFF;
+}
+
+#mask {
+	/* background-color: rgba(0, 0, 0, 0.5);  */      /* 灰色 */
+	/* background-color: rgba(255, 183, 76, 0.5); */  /* オレンジ */
+	background-color: rgba(82, 162, 197, 0.5);        /* ナイルブルー */
+}

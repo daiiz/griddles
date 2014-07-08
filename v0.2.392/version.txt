@@ -1,5 +1,6 @@
 ﻿GriddlesJS
 https://github.com/daiz713/griddles
 
-Version based on 0.1.103
+Code Name: nileblue
+Version:   0.2.392
 

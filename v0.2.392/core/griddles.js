@@ -1,5 +1,5 @@
 ﻿ /**
- * Griddles
+ * GriddlesJS
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
@@ -8,8 +8,6 @@ var griddles = griddles || {};
 
 /* Renderer */
 var d = document;
-var scrollbar_width = 16;
-var appbar_height = 52;
 
 griddles.stream_num = 0;
 griddles.pre_width = 0;
@@ -20,33 +18,15 @@ griddles.keepContentsNo_y = 0 - 1;
 griddles.max_stream_nums = 0;
 griddles.streamManager = [];
 griddles.auto_id_index = 0;
+griddles.user = {};
 
-/* カード１枚あたりの使用可能最大横幅を取得する */
-griddles.getFullWidth = function() {
-   var w_px = window.innerWidth - scrollbar_width;
-   return w_px;
+
+griddles.getTemplate =function(template_id) {
+   //var t = document.querySelector('#' + template_id);
+   //var clone = document.importNode(t.content, true);
+   //document.getElementById("template-cloning").createShadowRoot().appendChild(clone);
+   return document.getElementById("template-" + template_id).innerHTML;
 }
-
-/* カード１枚あたりの使用可能最大縦幅を取得する */
-griddles.getFullHeight = function(n) {
-   var h_px;
-   if(n == undefined) {
-      n = 0;
-   }
-   if(window.innerHeight > window.innerWidth) {
-      // 画面の縦幅の方が長い場合の処理
-      if(n == 0) {
-         h_px = window.innerHeight - appbar_height;
-      }else if(n > 0){
-         // 横幅の1/nを縦幅とする(int)
-         h_px = Math.floor((window.innerWidth - scrollbar_width)/n);
-      }
-   }else {
-      h_px = window.innerHeight - appbar_height;
-   }
-   return h_px;
-}
-
 
 /* 与えられたIdをもつカードまでジャンプする */
 /* location.href = "#xxx" の拡張版 */
@@ -104,6 +84,39 @@ griddles.manifest_compatibility = function() {
    if(griddles.layout.card_string_color == undefined) {
       griddles.layout.card_string_color = "#000";
    }
+
+   if(griddles.layout.menu_bar == undefined) {
+      griddles.layout.menu_bar = "auto";
+   }else if(griddles.layout.menu_bar == "none") {
+      document.getElementById('base_bar').style.display = "none";
+      //document.getElementById('base_bar').style.visibility = "hidden";
+      document.getElementById('main').style.paddingTop = "100px";
+   }
+
+   if(griddles.layout.app_bar == undefined) {
+      griddles.layout.app_bar = "auto";
+   }else if(griddles.layout.app_bar == "none") {
+      document.getElementById('app_bar').style.display = "none";
+      document.getElementById('main').style.paddingTop = "50px";
+   }
+   griddles.user.app_bar = griddles.layout.app_bar;
+   
+   /*
+   if(griddles.layout.side_nav_color == undefined) {
+      griddles.layout.side_nav_color = "#fff";
+   }
+   document.getElementById("sideLogo").style.backgroundColor = griddles.layout.side_nav_color;
+   */
+
+   /*
+   if(griddles.layout.hamburger_color == undefined) {
+      griddles.layout.hamburger_color = "#444";
+   }
+   var hums = document.getElementsByClassName("hamburger");
+   for(var t = 0; t < hums.length; t++) {
+      hums[t].style.backgroundColor = griddles.layout.hamburger_color;
+   }
+   */
 }
 
 griddles.setCardBaseDesign = function() {
@@ -145,12 +158,12 @@ griddles.update = function() {
 griddles.load = function() {
     /* 初期化 */
     d.getElementsByTagName("body")[0].style.backgroundColor = griddles.layout.background_color;
-    d.getElementById("page_icon").src = griddles.layout.page_icon;
-    d.getElementById("app_bar").style.backgroundColor = griddles.layout.page_bar_bg_color;
+    d.getElementById("side_page_icon").src = griddles.layout.page_icon;
+    //d.getElementById("app_bar").style.backgroundColor = griddles.layout.page_bar_bg_color;
     document.getElementById("select_menu").innerHTML = griddles.layout.page_title;
-    d.getElementById("select_menu").style.backgroundColor = griddles.layout.page_bar_bg_color;
+    //d.getElementById("select_menu").style.backgroundColor = griddles.layout.page_bar_bg_color;
     //d.getElementById("select_menu").style.background = "linear-gradient("+griddles.layout.page_bar_bg_color+","+griddles.layout.page_bar_bg_color+");";
-    d.getElementById("select_menu").style.color = griddles.layout.page_bar_color;
+    //d.getElementById("select_menu").style.color = griddles.layout.page_bar_color;
     
     /* [0.0.36+]暫定的に追加 */
     if(griddles.cca == true) {
@@ -699,7 +712,6 @@ $(window).resize("resize", function() {
     }, 200);
 });
 
-/* [0.0.36+]新バージョン導入案 */
 /* aタグ href の代替機能 */
 /* data-griddles-link == "相対パス または 絶対パス" */
 window.addEventListener("click", function(e) {
@@ -717,12 +729,6 @@ window.addEventListener("click", function(e) {
 /* 擬似aタグ */
 griddles.openBrowserTab = function(url) { 
     // url: 外部ページの絶対URLが期待される
-    /*
-    var a = document.createElement('a'); 
-    a.href = url; 
-    a.target='_blank'; 
-    a.click(); 
-    */
     var a = document.getElementById("GRIDDLES_A_TAG");
     a.href = url;
     a.target='_blank'; 
@@ -765,13 +771,20 @@ griddles.showLeftBottomBtn = function() {
    $("#plusbtn").fadeIn();
 }
 
+griddles.showToast = griddles.showLeftBottomBtn;
+
 griddles.hideLeftBottomBtn = function() {
    $("#plusbtn").fadeOut();
 }
 
+griddles.hideToast = griddles.hideLeftBottomBtn;
 
 griddles.removeFloatCard = function(id) {
    $("#" + id).fadeOut("",function() {
+       if(griddles.layout.app_bar == "fixed") {
+         griddles.layout.app_bar = griddles.user.app_bar;
+         document.getElementById("mask").className = "mask_off_after";
+       }  
        $("#" + id).remove();
    });
 }
@@ -795,7 +808,7 @@ griddles.showFloatCard = function(vals, html) {
     var v = "padding-top: "+p_t+"px;" + "padding-right: "+p_r+"px;" + "padding-bottom: "+p_b+"px;" + "padding-left: "+p_l+"px;";
     var ml = +((document.getElementById("stream_0").style.marginLeft).split("px")[0]);
     w = (w * griddles.max_stream_nums) + ((griddles.layout.stream_margin_left_px + griddles.layout.stream_margin_right_px)*(griddles.max_stream_nums - 1));
-    var card = "<div id="+vals.id+" class='Card FloatCard' style='display: none; box-shadow: 0px 5px 10px rgba(0,0,0,0.4); "+v+" width: "+w+"px; position: fixed; z-index: 27; margin-left: "+ml+"px; height: "+vals.height+"px; margin-top: "+vals.marginTop+"px;'>"+html+"</div>";
+    var card = "<div data-cardtype='float' id="+vals.id+" class='Card FloatCard' style='display: none; /*box-shadow: 0px 5px 10px rgba(0,0,0,0.4);*/ "+v+" width: "+w+"px; position: fixed; z-index: 31/*27*/; margin-left: "+ml+"px; height: "+vals.height+"px; margin-top: "+vals.marginTop+"px;'>"+html+"</div>";
     // 表示領域を確保して表示する
     if(document.getElementById("stage_floatcard") == null) {
        $("#stage").append("<div id='stage_floatcard'></div>");
@@ -805,6 +818,12 @@ griddles.showFloatCard = function(vals, html) {
        $("#stage_floatcard").append(card);
        $("#"+vals.id).fadeIn();
     }
+
+    if(griddles.layout.app_bar == "auto") {
+       griddles.layout.app_bar = "fixed";
+    }
+    document.getElementById("mask").className = "mask_on";
+
 
     return vals.id;
   }else {

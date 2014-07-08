@@ -1,4 +1,4 @@
-﻿var nowp = 0;
+var nowp = 0;
 var how_many_scroll = 0;
 var appbar = document.getElementById("app_bar");
 var basebar = document.getElementById("base_bar");
@@ -7,6 +7,8 @@ var start_scroll_top = 0;
 
 var closing_step = 0;
 var opening_step = 0;
+
+document.getElementById("base_bar_text").innerHTML = griddles.layout.menu_items[0];
 
 function scrollLog(n) {
    how_many_scroll = how_many_scroll + n;
@@ -38,29 +40,40 @@ $(function() {
             // 下にスクロール(+)
             //console.log("下に移動");
             // console.log(getScrollLog());
+            if(griddles.layout.app_bar == "auto") {
+              crd("app_bar", "close_appbar", "open_appbar");
+              crd("app_icon_area", "close_icon", "open_icon");
+              crd("menu_box", "close_app_name", "open_app_name");
+            }
             
-            crd("app_bar", "close_appbar", "open_appbar");
-            crd("app_icon_area", "close_icon", "open_icon");
-            crd("menu_box", "close_app_name", "open_app_name");
-          
-            crd("base_bar_text", "close_text", "open_text");
-            crd("base_bar", "close", "open_basebar");
-            
+            if(griddles.layout.menu_bar == "auto") {
+              crd("base_bar_text", "close_text", "open_text");
+              crd("base_bar", "close", "open_basebar");
+            }
+            /*
             if(document.getElementById("stage_floatcard") != null) {
               $("#stage_floatcard").show();
             }
+            */
          }else{
             // 上にスクロール(-)
             if(getScrollLog() <= -100) {
-              crd("base_bar_text", "open_text", "close_text");
-              crd("base_bar", "open_basebar", "close");
-            
-              crd("app_icon_area", "open_icon", "close_icon");
-              crd("menu_box", "open_app_name", "close_app_name");
-              crd("app_bar", "open_appbar", "close_appbar");
+
+              if(griddles.layout.menu_bar == "auto") {
+                crd("base_bar_text", "open_text", "close_text");
+                crd("base_bar", "open_basebar", "close");
+              }
+
+              if(griddles.layout.app_bar == "auto") {
+                crd("app_icon_area", "open_icon", "close_icon");
+                crd("menu_box", "open_app_name", "close_app_name");
+                crd("app_bar", "open_appbar", "close_appbar");
+              }
+              /*
               if(document.getElementById("stage_floatcard") != null) {
                 $("#stage_floatcard").fadeOut();
               }
+              */
             }
          }
        }
@@ -86,7 +99,7 @@ basebar.addEventListener("click", function(e) {
 function when_menus_open() {
 　　　test_menu_list = griddles.layout.menu_items;
    var stage = document.getElementById("menus");
-   $(stage).append("<div style='height: 114px;'></div>");
+   //$(stage).append("<div style='height: 114px;'></div>");
    for(var i = 0; i < test_menu_list.length; i++) {
       var new_menu = "<div id='menu_'"+i+" class='list_menu $"+test_menu_list[i]+"' data-label='"+test_menu_list[i]+"'>" + test_menu_list[i] + "</div>";
       $(stage).append(new_menu);

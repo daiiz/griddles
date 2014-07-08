@@ -3,7 +3,7 @@
 // chrome app の shellウィンドウを使用するためには
 // griddles.cashell の値は true にしてください。
 // ここで指定した値は chrome apps 以外では無視されます。
-griddles.cashell = false;
+// griddles.cashell = false;
 
 
 (function() {

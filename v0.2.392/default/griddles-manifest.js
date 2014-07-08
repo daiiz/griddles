@@ -1,26 +1,24 @@
 ﻿/**
- * Griddles 
+ * GriddlesJS
  * (c) 2013-2014 daiz. https://github.com/daiz713/griddles
  * License: MIT
  */
 
 var griddles = griddles || {};
+var maxWidth = griddles.getFullWidth();
+var maxHeight = griddles.getFullHeight();
 
- /* User settings */
 griddles.msgLoading = "...griddlesJS";
-
-/* flags 
-griddles.xhrimg = false;
-griddles.cca = false;
-*/
+griddles.cashell = false;
 
 griddles.layout = {
-    "page_title": "griddlesJS",
+    "page_title": "GriddlesJS",
     "page_icon": "icon.png",
-    "page_bar_color": "#fff",
-    "page_bar_bg_color": "#52A2C5",
     "background_color": "#e5e5e5",
     "card_string_color": "#000",
+    "app_bar": "auto",
+    "menu_bar": "auto",
+    "side_nav": true,
     "window": {
         "portrait": {
             "card_width_px": 275,
@@ -36,7 +34,7 @@ griddles.layout = {
             "stream_margin_right_px": 17,
             "card_margin_bottom": 34,
             "card_paddings": [4, 4, 4, 4],
-            "card_border_radius": [3, 3, 3, 3]
+            "card_border_radius": [2, 2, 2, 2]
         }
     },
     "card_height_px": "auto",         // OR INT Number
@@ -44,12 +42,14 @@ griddles.layout = {
     "max_streams_limit": 4,
     "card_tooltip": false,
     "load_limit": false,
-    "griddles.layout.clear": false,
+    "clear": false,
     "cards": [],
     "menu_items": [
-        "タップしてメニューを選択",
-        "白色カード",
-        "カラフルカード"
+        "Menu",
+        "Menu2"
+    ],
+    "nav_items": [
+        {"label": "Hello, World", "value": "hello"}
     ]
 };
 
@@ -61,16 +61,22 @@ griddles.layout.menuOnChange = function(j) {
     myApp.menuOnChange(j);
 }
 
-/*
+griddles.layout.navOnClick = function(j) {
+    //j is JSON which has 'value', 'label' properties.
+    myApp.navOnClick(j);
+}
+
+
 griddles.layout.scrollEnd = function() {
    return false;
 }
-*/
 
+/*
 griddles.layout.scrollEnd = function() {
    myApp.scrollEnd();
-   return true;
+   return true; 
 }
+*/
 
 griddles.layout.cards.push(
     griddles.card(

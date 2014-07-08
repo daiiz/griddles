@@ -5,12 +5,12 @@
 一部アニメーション等にjQueryを使用しています。
 
 ## How To Use
-1. このリポジトリをクローンしてgriddlesJSの最新版を入手します。
+1. このリポジトリをクローンしてgriddlesJSのソースコードを入手します。
  ```
    git clone https://github.com/daiz713/griddles.git
  ```
 
-1. 以下のコマンドを実行してgriddlesJSのパッケージを任意の場所にコピーします。
+1. 以下のコマンドを実行してgriddlesJSの最新版のパッケージを任意の場所にコピーします。
  ```
    cp -r griddles/v0.1.103/ YourGriddlesPkg
  ```

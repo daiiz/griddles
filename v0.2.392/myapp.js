@@ -8,10 +8,11 @@ myApp.load = function(e) {
 
 myApp.addInfoCard = function() {
    griddles.layout.cards = [];
-   griddles.layout.cards.push(griddles.card({"init": "<span style='font-size: 38px'>Hello, world!</span>"}));
-   griddles.layout.cards.push(griddles.card({"color": "#52A2C5", "init": "<span style='font-size: 38px'>Ver Next<br></span>Code Name: nileblue<b></b><br>"}));
+   // "<span style='font-size: 38px'>Hello, world!</span>"
+   griddles.layout.cards.push(griddles.card({"init": griddles.getTemplate("hello")}));
+   griddles.layout.cards.push(griddles.card({"color": "#52A2C5", "init": "<span style='font-size: 38px'>Ver 0.2.392<br></span>Code Name: nileblue<b></b><br>"}));
    griddles.layout.cards.push(griddles.card({"type": "default-caption-img", "caption": "GitHubページを開く", "dataset": [["url", "https://github.com/daiz713/griddles"]], "init": "imgs/GitHub_Logo.png"}));
-   griddles.layout.cards.push(griddles.card({"type": "default-caption-img", "caption": "griddlesJSの記事を開く", "dataset": [["url", "http://daiiz.hatenablog.com/archive/category/griddles"]], "init": "imgs/hatena_blog.png"}));
+   griddles.layout.cards.push(griddles.card({"type": "default-caption-img", "caption": "griddlesJSの記事を読む", "dataset": [["url", "http://daiiz.hatenablog.com/archive/category/griddles"]], "init": "imgs/hatena_blog.png"}));
    griddles.render = true;  /* important! */
    griddles.load();
 }
@@ -24,8 +25,16 @@ myApp.addCard = function() {
 
 myApp.cardOnClick = function(j) {
     griddles.showLeftBottomBtn();
+    console.log(j.dataset);
     if(j.dataset.url != undefined) {
        griddles.openBrowserTab(j.dataset.url);
+    }
+    if(j.dataset.cardtype == "float") {
+       var h;
+       var f = document.getElementsByClassName("FloatCard");
+       for(h = 0; h < f.length; h++) {
+           griddles.removeFloatCard(f[h].id);
+       }
     }
 }
 
@@ -62,14 +71,17 @@ myApp.scrollEnd = function() {
    return true;
 }
 
-myApp.iconClicked = function() {
-  if(document.getElementById("test") == null) {
-     griddles.showFloatCard({height:100, marginTop: 0, id: "test"}, "<div><img src='icon.png'</div>");
-  }else {
-     griddles.removeFloatCard("test");
-  }
-}
 
+myApp.navOnClick = function(j) {
+  switch(j.value) {
+    case "about": 
+         if(document.getElementById("test") == null) {
+            griddles.showFloatCard({height:100, marginTop: 0, id: "test"}, "<div data-cardtype='float'><img src='icon.png'>タップして閉じる</div>");
+         }
+         break;
+    break;
+  }  
+}
 document.getElementById("base_bar_text").innerHTML = griddles.layout.menu_items[0];
 document.getElementById("page_icon").addEventListener("click", myApp.iconClicked, false);
 window.addEventListener("load", myApp.load, false);
