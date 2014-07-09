@@ -12,7 +12,7 @@
 
 1. 以下のコマンドを実行してgriddlesJSの最新版のパッケージを任意の場所にコピーします。
  ```
-   cp -r griddles/v0.1.103/ YourGriddlesPkg
+   cp -r griddles/v0.2.392/ YourGriddlesPkg
  ```
 
 1. あとはサンプルのソースコードや[Design Guide](https://github.com/daiz713/griddles/wiki/Design-Guide)を参考にしながら griddles-manifest.js を編集し、ページをデザインするだけです。後日、griddlesJS Referenceを公開する予定です。

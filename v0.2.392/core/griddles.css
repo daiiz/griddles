@@ -359,11 +359,15 @@ body {
 .mask_on {
   visibility: visible;
   opacity: 1;
+  -moz-transition: opacity 0.3s linear 0 , width 1s linear 0 , height 1s linear 0;
+  -webkit-transition: opacity 0.3s linear 0 , width 1s linear 0 , height 1s linear 0;
   transition: opacity 0.3s linear 0 , width 1s linear 0 , height 1s linear 0;
 }
 
 .mask_off {
   opacity: 0;
+  -moz-transition: opacity 0.3s linear 0 , width 1s linear 0 , height 1s linear 0;
+  -webkit-transition: opacity 0.3s linear 0 , width 1s linear 0 , height 1s linear 0;
   transition: opacity 0.3s linear 0 , width 1s linear 0 , height 1s linear 0;
 }
 

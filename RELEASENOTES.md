@@ -1,3 +1,6 @@
+### v0.2.392 (Jul 10, 2014)
+* CodeName: nileblue
+
 ### v0.1.103 (Jun 13, 2014)
 * CodeName: chromeyellow
    * cordova chrome app に対応
