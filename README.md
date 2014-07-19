@@ -27,6 +27,6 @@
 
 ## Documentation
 
-+ http://daiiz.hatenablog.com/category/griddles
++ http://daiiz.hatenablog.com/archive/category/griddles
    + griddlesJS について書いたブログ記事です。
                
