@@ -28,7 +28,8 @@
     + griddlesJS を用いたchrome拡張機能です。
 
 ## Documentation
++ griddlesJS について書いたブログ記事です。
+   + http://daiiz.hatenablog.com/archive/category/griddles
+   + http://qiita.com/griddlecake/items/6eb55332d48cfc2d3677
 
-+ http://daiiz.hatenablog.com/archive/category/griddles
-   + griddlesJS について書いたブログ記事です。
                
